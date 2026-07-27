@@ -1,0 +1,23 @@
+# NAME: Bybit Regional
+# AUTHOR: bluelittlerain
+# REPO: https://github.com/bluelittlerain/quantumultx-bybit-rules
+# SOURCE: Bybit official V5 API and WebSocket documentation
+# UPDATED: 2026-07-28 00:00:00 UTC
+# HOST: 4
+# HOST-SUFFIX: 8
+# IP-CIDR: 0
+# IP6-CIDR: 0
+# TOTAL: 12
+
+HOST,api-testnet.manepa.jp,Bybit
+HOST,api.manepa.jp,Bybit
+HOST,stream.manepa.jp,Bybit
+HOST,www.manepa.jp,Bybit
+HOST-SUFFIX,bybit-tr.com,Bybit
+HOST-SUFFIX,bybit.ae,Bybit
+HOST-SUFFIX,bybit.eu,Bybit
+HOST-SUFFIX,bybit.id,Bybit
+HOST-SUFFIX,bybit.kz,Bybit
+HOST-SUFFIX,bybit.nl,Bybit
+HOST-SUFFIX,bybit.tr,Bybit
+HOST-SUFFIX,bybitgeorgia.ge,Bybit

@@ -1,0 +1,26 @@
+# 类型,域名,排除原因
+# 这些根域不会被主规则自动吸收；具体且可证实的专用子域需单独人工审查。
+HOST-SUFFIX,amazon.com,共享电商与云服务根域，会影响大量非 Bybit 流量
+HOST-SUFFIX,amazonaws.com,AWS 共享云服务根域
+HOST-SUFFIX,cloudfront.net,CloudFront 共享 CDN 根域
+HOST-SUFFIX,cloudflare.com,Cloudflare 共享服务根域
+HOST-SUFFIX,google.com,Google 共享服务根域
+HOST-SUFFIX,googleapis.com,Google API 共享根域
+HOST-SUFFIX,gstatic.com,Google 静态资源共享根域
+HOST-SUFFIX,app-measurement.com,Firebase/Google Analytics 共享统计服务
+HOST-SUFFIX,appsflyer.com,AppsFlyer 共享归因 SDK
+HOST-SUFFIX,firebaseio.com,Firebase 共享服务根域
+HOST-SUFFIX,sentry.io,Sentry 共享错误监控服务
+HOST-SUFFIX,akamai.net,Akamai 共享 CDN 根域
+HOST-SUFFIX,akamaiedge.net,Akamai 共享 CDN 根域
+HOST-SUFFIX,apple.com,Apple 共享系统服务根域
+HOST-SUFFIX,icloud.com,Apple iCloud 共享服务根域
+HOST-SUFFIX,bybit-tr.com,Bybit 土耳其独立地区服务；仅放入可选地区规则
+HOST-SUFFIX,bybit.ae,Bybit 阿联酋独立地区服务；仅放入可选地区规则
+HOST-SUFFIX,bybit.eu,Bybit EEA 独立地区服务；仅放入可选地区规则
+HOST-SUFFIX,bybit.id,Bybit 印尼独立地区服务；仅放入可选地区规则
+HOST-SUFFIX,bybit.kz,Bybit 哈萨克斯坦独立地区服务；仅放入可选地区规则
+HOST-SUFFIX,bybit.nl,Bybit 荷兰独立地区服务；仅放入可选地区规则
+HOST-SUFFIX,bybit.tr,Bybit 土耳其独立地区服务；仅放入可选地区规则
+HOST-SUFFIX,bybitgeorgia.ge,Bybit 格鲁吉亚独立地区服务；仅放入可选地区规则
+HOST-SUFFIX,manepa.jp,日本 Money Partners 根域可能承载其他业务；主规则排除

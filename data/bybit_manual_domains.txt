@@ -1,0 +1,6 @@
+# 类型,域名,来源说明
+# 人工确认项会与自动上游合并；自动更新不会删除这些行。
+HOST,bybit-exchange.github.io,Bybit 官方 V5 API 文档站
+HOST-SUFFIX,bybit.com,Bybit 官方主站、REST API 与 WebSocket 文档
+HOST-SUFFIX,bytick.com,Bybit 官方 V5 API 主网备用端点
+HOST-SUFFIX,bybick.com,Bybit 官方 V5 API Rate Limit 文档列出的 API 根域
