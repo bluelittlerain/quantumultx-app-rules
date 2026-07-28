@@ -19,13 +19,12 @@ import zipfile
 from pathlib import Path
 from typing import Callable, Iterable, Sequence
 
+import repository_identity
+
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_OUTPUT = ROOT / "data" / "clubsim_candidates.tsv"
-USER_AGENT = (
-    "quantumultx-clubsim-rules-discovery/1.0 "
-    "(+https://github.com/bluelittlerain/quantumultx-bybit-rules)"
-)
+USER_AGENT = repository_identity.user_agent("clubsim-discovery")
 NETWORK_TIMEOUT_SECONDS = 30
 MAX_TEXT_BYTES = 12 * 1024 * 1024
 MAX_APK_BYTES = 250 * 1024 * 1024

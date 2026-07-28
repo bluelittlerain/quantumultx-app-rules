@@ -18,14 +18,13 @@ import urllib.request
 from pathlib import Path
 from typing import Callable, Iterable, Sequence
 
+import repository_identity
+
 
 ROOT = Path(__file__).resolve().parents[1]
-AUTHOR = "bluelittlerain"
-REPOSITORY_URL = "https://github.com/bluelittlerain/quantumultx-bybit-rules"
-USER_AGENT = (
-    "quantumultx-clubsim-rules-updater/1.0 "
-    "(+https://github.com/bluelittlerain/quantumultx-bybit-rules)"
-)
+AUTHOR = repository_identity.OWNER
+REPOSITORY_URL = repository_identity.REPOSITORY_URL
+USER_AGENT = repository_identity.user_agent("clubsim-updater")
 NETWORK_TIMEOUT_SECONDS = 25
 UPSTREAM_URL = (
     "https://raw.githubusercontent.com/ClearLuv/iOS_collecton/"

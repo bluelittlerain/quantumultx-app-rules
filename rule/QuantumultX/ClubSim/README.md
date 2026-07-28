@@ -21,8 +21,8 @@ Club Sim 月费服务使用独立 App（公开商店资料显示 Android 包名�
 
 Raw 链接：
 
-- [ClubSim.list](https://raw.githubusercontent.com/bluelittlerain/quantumultx-bybit-rules/main/rule/QuantumultX/ClubSim/ClubSim.list)
-- [ClubSim-Network.list](https://raw.githubusercontent.com/bluelittlerain/quantumultx-bybit-rules/main/rule/QuantumultX/ClubSim/ClubSim-Network.list)
+- [ClubSim.list](https://raw.githubusercontent.com/bluelittlerain/quantumultx-app-rules/main/rule/QuantumultX/ClubSim/ClubSim.list)
+- [ClubSim-Network.list](https://raw.githubusercontent.com/bluelittlerain/quantumultx-app-rules/main/rule/QuantumultX/ClubSim/ClubSim-Network.list)
 
 ## 已确认的主规则域名
 

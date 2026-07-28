@@ -52,7 +52,7 @@
 地区 Raw 链接：
 
 ```text
-https://raw.githubusercontent.com/bluelittlerain/quantumultx-bybit-rules/main/rule/QuantumultX/Bybit/Bybit-Regional.list
+https://raw.githubusercontent.com/bluelittlerain/quantumultx-app-rules/main/rule/QuantumultX/Bybit/Bybit-Regional.list
 ```
 
 ## 7. 被排除的共享服务
@@ -69,7 +69,7 @@ https://raw.githubusercontent.com/bluelittlerain/quantumultx-bybit-rules/main/ru
 4. 粘贴主规则 Raw 链接：
 
    ```text
-   https://raw.githubusercontent.com/bluelittlerain/quantumultx-bybit-rules/main/rule/QuantumultX/Bybit/Bybit.list
+   https://raw.githubusercontent.com/bluelittlerain/quantumultx-app-rules/main/rule/QuantumultX/Bybit/Bybit.list
    ```
 
 5. 为资源设置名称，例如 `Bybit`。
@@ -86,13 +86,13 @@ https://raw.githubusercontent.com/bluelittlerain/quantumultx-bybit-rules/main/ru
 主规则：
 
 ```text
-https://raw.githubusercontent.com/bluelittlerain/quantumultx-bybit-rules/main/rule/QuantumultX/Bybit/Bybit.list
+https://raw.githubusercontent.com/bluelittlerain/quantumultx-app-rules/main/rule/QuantumultX/Bybit/Bybit.list
 ```
 
 可选地区规则：
 
 ```text
-https://raw.githubusercontent.com/bluelittlerain/quantumultx-bybit-rules/main/rule/QuantumultX/Bybit/Bybit-Regional.list
+https://raw.githubusercontent.com/bluelittlerain/quantumultx-app-rules/main/rule/QuantumultX/Bybit/Bybit-Regional.list
 ```
 
 ## 10. 规则优先级

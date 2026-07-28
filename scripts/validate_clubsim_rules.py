@@ -11,6 +11,7 @@ import urllib.parse
 from pathlib import Path
 from typing import Iterable, Sequence
 
+import repository_identity
 import update_clubsim_quantumultx as updater
 
 
@@ -26,17 +27,14 @@ MANUAL = ROOT / "data" / "clubsim_manual_domains.txt"
 NETWORK_DATA = ROOT / "data" / "clubsim_network_domains.txt"
 EXCLUDED = ROOT / "data" / "clubsim_excluded_domains.txt"
 
-EXPECTED_REPOSITORY = "bluelittlerain/quantumultx-bybit-rules"
-EXPECTED_REPO_URL = f"https://github.com/{EXPECTED_REPOSITORY}"
+EXPECTED_REPO_URL = repository_identity.REPOSITORY_URL
 RAW_BASE = (
-    "https://raw.githubusercontent.com/"
-    f"{EXPECTED_REPOSITORY}/main/rule/QuantumultX/ClubSim"
+    f"{repository_identity.RAW_BASE_URL}/rule/QuantumultX/ClubSim"
 )
 EXPECTED_BYBIT_LINKS = (
-    "https://raw.githubusercontent.com/bluelittlerain/"
-    "quantumultx-bybit-rules/main/rule/QuantumultX/Bybit/Bybit.list",
-    "https://raw.githubusercontent.com/bluelittlerain/"
-    "quantumultx-bybit-rules/main/rule/QuantumultX/Bybit/Bybit-Regional.list",
+    f"{repository_identity.RAW_BASE_URL}/rule/QuantumultX/Bybit/Bybit.list",
+    f"{repository_identity.RAW_BASE_URL}"
+    "/rule/QuantumultX/Bybit/Bybit-Regional.list",
 )
 
 ALLOWED_TYPES = frozenset(updater.TYPE_ORDER)
@@ -53,6 +51,7 @@ REQUIRED_FILES = (
     ROOT / "scripts" / "discover_clubsim_domains.py",
     ROOT / "scripts" / "update_clubsim_quantumultx.py",
     ROOT / "scripts" / "validate_clubsim_rules.py",
+    ROOT / "scripts" / "repository_identity.py",
     ROOT / "tests" / "test_clubsim_rules.py",
     ROOT / ".github" / "workflows" / "update-clubsim-quantumultx.yml",
 )

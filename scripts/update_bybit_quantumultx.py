@@ -18,6 +18,8 @@ import urllib.request
 from pathlib import Path
 from typing import Callable, Iterable, Sequence
 
+import repository_identity
+
 
 ROOT = Path(__file__).resolve().parents[1]
 OUTPUT_PATH = ROOT / "rule" / "QuantumultX" / "Bybit" / "Bybit.list"
@@ -28,9 +30,9 @@ README_PATHS = (
     ROOT / "rule" / "QuantumultX" / "Bybit" / "README.md",
 )
 
-AUTHOR = "bluelittlerain"
-REPOSITORY_URL = "https://github.com/bluelittlerain/quantumultx-bybit-rules"
-USER_AGENT = "quantumultx-bybit-rules-updater/1.0 (+https://github.com/bluelittlerain/quantumultx-bybit-rules)"
+AUTHOR = repository_identity.OWNER
+REPOSITORY_URL = repository_identity.REPOSITORY_URL
+USER_AGENT = repository_identity.user_agent("bybit-updater")
 NETWORK_TIMEOUT_SECONDS = 20
 MINIMUM_UPSTREAM_RULES = 8
 

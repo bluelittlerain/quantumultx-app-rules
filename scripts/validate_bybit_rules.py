@@ -33,6 +33,7 @@ EXPECTED_TEXT_FILES = (
     ROOT / "data" / "bybit_excluded_domains.txt",
     ROOT / "scripts" / "update_bybit_quantumultx.py",
     ROOT / "scripts" / "validate_bybit_rules.py",
+    ROOT / "scripts" / "repository_identity.py",
     ROOT / "tests" / "test_bybit_rules.py",
     ROOT / ".github" / "workflows" / "update-bybit-quantumultx.yml",
     MAIN_RULE,
