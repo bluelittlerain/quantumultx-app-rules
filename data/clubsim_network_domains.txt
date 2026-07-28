@@ -1,0 +1,7 @@
+# 类型,域名,范围,来源说明
+# 这些是可选网络服务，不是 Club Sim App 登录、增值或套餐 API。
+HOST,csl.prod.ondemandconnectivity.com,network,Current ClearLuv ClubSim public rule for eSIM provisioning
+HOST,epdg.epc.mnc000.mcc454.pub.3gppnetwork.org,network,Current ClearLuv ClubSim public rule for ePDG
+HOST,hhk.prod.ondemandconnectivity.com,network,Current ClearLuv ClubSim public rule for eSIM provisioning
+HOST,ss.epdg.epc.geo.mnc000.mcc454.pub.3gppnetwork.org,network,Current ClearLuv ClubSim public rule for ePDG service selection
+HOST,ss.epdg.epc.mnc000.mcc454.pub.3gppnetwork.org,network,Current ClearLuv ClubSim public rule for ePDG service selection

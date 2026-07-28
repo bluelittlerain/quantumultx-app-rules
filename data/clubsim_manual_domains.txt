@@ -1,0 +1,4 @@
+# 类型,域名,范围,来源说明
+# 只收录已经由公开官方来源确认、误匹配风险较低的储值卡 App 业务域名。
+HOST,clubsim.page.link,prepaid-app,Club Sim official app-link reference in the current official web script
+HOST-SUFFIX,clubsim.com.hk,prepaid-app,Club Sim official website and same-origin account service APIs

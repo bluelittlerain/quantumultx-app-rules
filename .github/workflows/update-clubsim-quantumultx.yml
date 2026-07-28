@@ -1,0 +1,64 @@
+name: Update ClubSim Quantumult X rules
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "29 04 * * 2"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-clubsim-quantumultx
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7
+
+      - name: Set up Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: "3.13"
+
+      - name: Run complete unit test suite
+        run: python -m unittest discover -s tests -v
+
+      - name: Check public Club Sim discovery sources
+        run: python scripts/discover_clubsim_domains.py --check --no-apk --verbose
+
+      - name: Update approved ClubSim rules
+        run: python scripts/update_clubsim_quantumultx.py --verbose
+
+      - name: Validate ClubSim generated files
+        run: python scripts/validate_clubsim_rules.py
+
+      - name: Validate existing Bybit files
+        run: python scripts/validate_bybit_rules.py
+
+      - name: Commit and push real generated changes
+        shell: bash
+        run: |
+          if git diff --quiet; then
+            echo "No rule changes."
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add \
+            README.md \
+            rule/QuantumultX/ClubSim/ClubSim.list \
+            rule/QuantumultX/ClubSim/ClubSim-Network.list \
+            rule/QuantumultX/ClubSim/README.md
+
+          if git diff --cached --quiet; then
+            echo "No approved generated-file changes to commit."
+            exit 0
+          fi
+
+          git commit -m "chore: update ClubSim QuantumultX rules"
+          git push origin "HEAD:${{ github.event.repository.default_branch }}"

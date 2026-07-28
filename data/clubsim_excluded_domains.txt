@@ -1,0 +1,64 @@
+# 域名或根域名,排除原因
+# 禁止整体收录的共享平台、基础设施和集团域名
+akamai.net,shared CDN infrastructure
+akamaiedge.net,shared CDN infrastructure
+amazon.com,shared commerce and platform services
+amazonaws.com,shared cloud infrastructure
+apple.com,shared Apple identity and system services
+appsflyer.com,shared attribution SDK
+cloudflare.com,shared CDN and security infrastructure
+cloudfront.net,shared CDN infrastructure
+doubleclick.net,shared advertising platform
+facebook.com,shared identity social and analytics platform
+facebook.net,shared identity social and analytics platform
+firebaseapp.com,shared application hosting
+firebaseio.com,shared application backend
+google-analytics.com,shared analytics platform
+google.com,shared identity and platform services
+googleapis.com,shared Google APIs
+googleusercontent.com,shared Google-hosted content
+googletagmanager.com,shared analytics tag manager
+gstatic.com,shared Google static resources
+hkcsl.com,shared CSL group services; only a proven dedicated exact host could be considered
+hkt.com,shared HKT group services; only a proven dedicated exact host could be considered
+icloud.com,shared Apple cloud services
+mastercard.com,shared payment network
+mzstatic.com,shared Apple static resources
+paypal.com,shared payment platform
+pccw.com,shared PCCW group services; only a proven dedicated exact host could be considered
+sentry.io,shared crash-reporting platform
+stripe.com,shared payment platform
+theclub.com.hk,shared loyalty and identity platform
+visa.com,shared payment network
+whatsapp.com,shared messaging platform
+
+# 调研中实际出现但被排除的精确候选
+accounts.google.com,shared Google identity endpoint
+accounts.theclub.com.hk,shared The Club identity endpoint
+api.qrserver.com,shared QR-code service
+api.whatsapp.com,shared WhatsApp customer-service endpoint
+appgallery.huawei.com,shared application marketplace
+appleid.cdn-apple.com,shared Apple sign-in library
+apps.apple.com,shared application marketplace
+bat.bing.com,shared analytics endpoint
+connect.facebook.net,shared Facebook SDK
+cs.nxtomo.com,third-party entertainment service without Club Sim exclusivity
+fonts.googleapis.com,shared Google font service
+gift.bfb.nxtomogames.com,third-party entertainment service
+onelink.to,shared application-link service
+pccw-ww1.valueplatforms.com,shared group or payment platform
+play.google.com,shared application marketplace
+project2.digitpepper.com,development or vendor host without production ownership evidence
+r.unimhk.com,third-party campaign platform
+redeem.theclub.com.hk,shared The Club loyalty service
+rnr.hkcsl.com,path-level real-name portal shared under the CSL group
+sdeweb.hkcsl.com,path-level carrier-billing portal shared under the CSL group
+www.clubsim.com,stale script link whose actual click destination is clubsim.com.hk
+www.facebook.com,shared Facebook identity social and analytics platform
+www.google-analytics.com,shared analytics endpoint
+www.googletagmanager.com,shared analytics tag manager
+www.hkt.com,shared HKT group website
+www.instagram.com,shared social platform
+www.theclub.com.hk,shared loyalty and identity platform
+www.youtube-nocookie.com,shared video platform
+www.youtube.com,shared video platform
