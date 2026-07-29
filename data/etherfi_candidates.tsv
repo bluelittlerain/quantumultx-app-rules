@@ -1,0 +1,23 @@
+domain	rule_type	scope	status	source	evidence	risk	notes
+alchemy.com	HOST-SUFFIX	shared	excluded	https://www.ether.fi/app/cash/safe	Official public Web App bundle references a shared blockchain infrastructure provider	high	Excluded
+api.turnkey.com	HOST	shared	excluded	https://www.ether.fi/app/cash/safe	Official public Web App bundle references a third-party wallet infrastructure host	high	Excluded
+apple.com	HOST-SUFFIX	shared	excluded	https://www.ether.fi/app/cash/safe	Official public Web App bundle references a shared platform service	high	Excluded
+ether.fi	HOST-SUFFIX	main	confirmed	https://www.ether.fi	Official root for website app account Cash Stake Liquid and ETHFI services	low	Approved core root
+ethereum.org	HOST-SUFFIX	shared	excluded	https://www.ether.fi/app/cash/safe	Public Ethereum ecosystem service is not Ether.fi-exclusive	high	Excluded
+etherfi.gitbook.io	HOST	shared	excluded	https://etherfi.gitbook.io/etherfi	Official documentation on a shared publishing platform is not core App traffic	medium	Excluded
+etherfi.medium.com	HOST	shared	historical	https://www.ether.fi	External publishing host observed in official public website code	medium	Not approved
+etherfi.notion.site	HOST	shared	excluded	https://www.ether.fi	Official media resources use a shared publishing platform	high	Excluded
+etherfi.onelink.me	HOST	shared	excluded	https://www.ether.fi/app/cash/safe	Dedicated app deep-link host uses a shared attribution platform and is not core service traffic	medium	Excluded
+etherscan.io	HOST-SUFFIX	shared	excluded	https://etherfi.gitbook.io/etherfi/contracts-and-integrations/deployed-contracts	Public blockchain explorer is not Ether.fi-exclusive	high	Excluded
+governance.ether.fi	HOST	main	confirmed	https://www.ether.fi	Official governance host is already covered by the ether.fi parent rule	low	Parent-covered; no redundant HOST
+help.ether.fi	HOST	main	confirmed	https://help.ether.fi/en	Official Help Center is already covered by the ether.fi parent rule	low	Parent-covered; no redundant HOST
+intercom.io	HOST-SUFFIX	shared	excluded	https://www.ether.fi/app/cash/safe	Shared customer-support service is not Ether.fi-exclusive	high	Excluded
+onelink.me	HOST-SUFFIX	shared	excluded	https://www.ether.fi/app/cash/safe	Shared app attribution and deep-link platform root	high	Excluded
+reown.com	HOST-SUFFIX	shared	excluded	https://www.ether.fi/app/cash/safe	Shared wallet-connectivity platform is used by unrelated applications	high	Excluded
+safe.global	HOST-SUFFIX	shared	excluded	https://www.ether.fi/app/cash/safe	Third-party wallet platform is not Ether.fi-exclusive	high	Excluded
+sentry.io	HOST-SUFFIX	shared	excluded	https://www.ether.fi/app/cash/safe	Shared error-monitoring service is not core Ether.fi traffic	high	Excluded
+sumsub.com	HOST-SUFFIX	shared	excluded	https://www.ether.fi/app/cash/safe	Shared identity-verification service is not Ether.fi-exclusive	high	Excluded
+turnkey.com	HOST-SUFFIX	shared	excluded	https://www.ether.fi/app/cash/safe	Shared wallet infrastructure root is not Ether.fi-exclusive	high	Excluded
+walletconnect.com	HOST-SUFFIX	shared	excluded	https://www.ether.fi/app/cash/safe	Shared wallet-connectivity root is used by unrelated applications	high	Excluded
+walletconnect.org	HOST-SUFFIX	shared	excluded	https://www.ether.fi/app/cash/safe	Shared wallet-connectivity and RPC root is used by unrelated applications	high	Excluded
+www.ether.fi	HOST	main	confirmed	https://www.ether.fi	Official website host is already covered by the ether.fi parent rule	low	Parent-covered; no redundant HOST

@@ -1,0 +1,2 @@
+# 类型,域名,范围,来源说明
+HOST-SUFFIX,ether.fi,main,Ether.fi official website help center documentation and official app listings

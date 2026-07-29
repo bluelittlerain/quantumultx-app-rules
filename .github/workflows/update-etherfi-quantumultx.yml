@@ -1,0 +1,70 @@
+name: Update Ether.fi Quantumult X rules
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "49 05 * * 0"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-etherfi-quantumultx
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7
+
+      - name: Set up Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: "3.13"
+
+      - name: Run Ether.fi unit tests
+        run: python -m unittest discover -s tests -p "test_etherfi_rules.py" -v
+
+      - name: Update approved Ether.fi rules
+        run: python scripts/update_etherfi_quantumultx.py --verbose
+
+      - name: Validate Ether.fi files
+        run: python scripts/validate_etherfi_rules.py
+
+      - name: Commit and safely push real changes
+        shell: bash
+        run: |
+          if git diff --quiet -- \
+            README.md \
+            rule/QuantumultX/EtherFi/EtherFi.list \
+            rule/QuantumultX/EtherFi/README.md; then
+            echo "No approved Ether.fi rule changes."
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add \
+            README.md \
+            rule/QuantumultX/EtherFi/EtherFi.list \
+            rule/QuantumultX/EtherFi/README.md
+
+          if git diff --cached --quiet; then
+            echo "No generated Ether.fi files to commit."
+            exit 0
+          fi
+
+          git commit -m "chore: add Ether.fi QuantumultX rules"
+          branch="${{ github.event.repository.default_branch }}"
+          for attempt in 1 2 3; do
+            if git pull --rebase origin "$branch" && \
+              git push origin "HEAD:$branch"; then
+              exit 0
+            fi
+            git rebase --abort 2>/dev/null || true
+            sleep $((attempt * 5))
+          done
+          echo "Unable to safely push after three attempts." >&2
+          exit 1

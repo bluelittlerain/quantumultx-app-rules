@@ -1,0 +1,13 @@
+# NAME: EtherFi
+# DESCRIPTION: Ether.fi official app and core first-party service domain rules
+# AUTHOR: bluelittlerain
+# REPO: https://github.com/bluelittlerain/quantumultx-app-rules
+# SOURCE: ether.fi official website, Help Center, documentation, and official app listings
+# UPDATED: 2026-07-29 06:31:42 UTC
+# HOST: 0
+# HOST-SUFFIX: 1
+# IP-CIDR: 0
+# IP6-CIDR: 0
+# TOTAL: 1
+
+HOST-SUFFIX,ether.fi,EtherFi

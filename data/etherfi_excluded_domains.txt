@@ -1,0 +1,40 @@
+# 域名或根域名,排除原因
+akamai.net,shared CDN root used by unrelated services
+alchemy.com,shared blockchain infrastructure root
+amazon.com,shared commerce and cloud-service root
+amazonaws.com,shared cloud infrastructure root
+apple.com,shared Apple platform root
+appsflyer.com,shared attribution service root
+appsflyersdk.com,shared attribution SDK root
+arbitrum.io,public blockchain network infrastructure
+azureedge.net,shared Microsoft CDN root
+cloudflare.com,shared CDN and security root
+cloudflare.net,shared CDN infrastructure root
+cloudfront.net,shared CDN root
+doubleclick.net,shared advertising root
+ethereum.org,public Ethereum ecosystem root
+etherfi.gitbook.io,official documentation host on a shared publishing platform; not core App traffic
+etherfi.medium.com,external publishing host; not core App traffic
+etherfi.notion.site,external media host; not core App traffic
+etherfi.onelink.me,dedicated app deep-link host on a shared attribution platform; not core service traffic
+etherscan.io,shared public blockchain explorer
+firebaseio.com,shared application platform root
+gitbook.io,shared documentation platform root
+google.com,shared Google root
+googleapis.com,shared Google API root
+googleusercontent.com,shared Google content root
+googletagmanager.com,shared analytics root
+gstatic.com,shared Google static-content root
+infura.io,shared blockchain infrastructure root
+intercom.io,shared customer-support platform root
+medium.com,shared publishing platform root
+notion.site,shared publishing platform root
+onelink.me,shared app attribution and deep-link root
+polygon-rpc.com,shared public blockchain RPC root
+reown.com,shared wallet-connectivity platform root
+safe.global,third-party wallet platform root
+sentry.io,shared error-monitoring root
+sumsub.com,shared identity-verification platform root
+turnkey.com,shared wallet infrastructure root
+walletconnect.com,shared wallet-connectivity root
+walletconnect.org,shared wallet-connectivity root
