@@ -1,0 +1,72 @@
+name: Update Bing Quantumult X rules
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "37 05 * * 5"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-bing-quantumultx
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7
+
+      - name: Set up Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: "3.13"
+
+      - name: Run Bing unit tests
+        run: python -m unittest discover -s tests -p "test_bing_rules.py" -v
+
+      - name: Update approved Bing rules
+        run: python scripts/update_bing_quantumultx.py --verbose
+
+      - name: Validate Bing files
+        run: python scripts/validate_bing_rules.py
+
+      - name: Commit and safely push real changes
+        shell: bash
+        run: |
+          if git diff --quiet -- \
+            README.md \
+            rule/QuantumultX/Bing/Bing.list \
+            rule/QuantumultX/Bing/Bing-AI.list \
+            rule/QuantumultX/Bing/README.md; then
+            echo "No approved Bing rule changes."
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add \
+            README.md \
+            rule/QuantumultX/Bing/Bing.list \
+            rule/QuantumultX/Bing/Bing-AI.list \
+            rule/QuantumultX/Bing/README.md
+
+          if git diff --cached --quiet; then
+            echo "No generated Bing files to commit."
+            exit 0
+          fi
+
+          git commit -m "chore: update Bing QuantumultX rules"
+          branch="${{ github.event.repository.default_branch }}"
+          for attempt in 1 2 3; do
+            if git pull --rebase origin "$branch" && \
+              git push origin "HEAD:$branch"; then
+              exit 0
+            fi
+            git rebase --abort 2>/dev/null || true
+            sleep $((attempt * 5))
+          done
+          echo "Unable to safely push after three attempts." >&2
+          exit 1

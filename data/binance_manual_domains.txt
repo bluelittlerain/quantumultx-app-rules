@@ -1,0 +1,19 @@
+# 类型,域名,范围,来源说明
+HOST,zftksc.cdn-settings.appsflyersdk.com,main,current v2fly and MetaCubeX exact Binance AppsFlyer host
+HOST,zftksc.launches.appsflyersdk.com,main,current v2fly and MetaCubeX exact Binance AppsFlyer host
+HOST-SUFFIX,binance.cloud,main,current blackmatrix7 v2fly and MetaCubeX Binance data
+HOST-SUFFIX,binance.com,main,Binance official website and API documentation
+HOST-SUFFIX,binance.me,main,current blackmatrix7 v2fly and MetaCubeX Binance data
+HOST-SUFFIX,binance.vision,main,Binance official market-data API documentation
+HOST-SUFFIX,binanceapi.com,main,current v2fly and MetaCubeX Binance API data
+HOST-SUFFIX,binancecnt.com,main,current blackmatrix7 v2fly and MetaCubeX Binance data
+HOST-SUFFIX,bnbstatic.com,main,current blackmatrix7 v2fly and MetaCubeX static-resource data
+HOST-SUFFIX,bntrace.com,main,current blackmatrix7 v2fly and MetaCubeX app-service data
+HOST-SUFFIX,bsappapi.cc,main,current v2fly and MetaCubeX app API data
+HOST-SUFFIX,bsappapi.com,main,current v2fly and MetaCubeX app API data
+HOST-SUFFIX,bscdnweb.com,main,current v2fly and MetaCubeX dedicated web-resource data
+HOST-SUFFIX,binance.charity,ecosystem,current v2fly and MetaCubeX ecosystem data
+HOST-SUFFIX,binance.org,ecosystem,current v2fly and MetaCubeX ecosystem data
+HOST-SUFFIX,bnbchain.org,ecosystem,BNB Chain public service and current upstream data
+HOST-SUFFIX,nftstatic.com,ecosystem,current v2fly and MetaCubeX Binance NFT static-resource data
+HOST-SUFFIX,binance.us,regional,Binance.US official website and current upstream data

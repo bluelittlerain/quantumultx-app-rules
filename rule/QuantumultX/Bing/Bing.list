@@ -1,0 +1,17 @@
+# NAME: Bing
+# DESCRIPTION: Microsoft Bing search app and service domain rules
+# AUTHOR: bluelittlerain
+# REPO: https://github.com/bluelittlerain/quantumultx-app-rules
+# SOURCE: Microsoft Bing public services, v2fly/domain-list-community, MetaCubeX/meta-rules-dat
+# UPDATED: 2026-07-29 04:59:16 UTC
+# HOST: 0
+# HOST-SUFFIX: 5
+# IP-CIDR: 0
+# IP6-CIDR: 0
+# TOTAL: 5
+
+HOST-SUFFIX,bing.com,Bing
+HOST-SUFFIX,bing.com.cn,Bing
+HOST-SUFFIX,bing.net,Bing
+HOST-SUFFIX,bingapis.com,Bing
+HOST-SUFFIX,bingvisualsearch.com,Bing

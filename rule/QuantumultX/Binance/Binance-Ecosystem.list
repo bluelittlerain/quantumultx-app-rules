@@ -1,0 +1,16 @@
+# NAME: Binance Ecosystem
+# DESCRIPTION: Optional Binance ecosystem and BNB Chain domain rules
+# AUTHOR: bluelittlerain
+# REPO: https://github.com/bluelittlerain/quantumultx-app-rules
+# SOURCE: Binance public services, v2fly/domain-list-community, MetaCubeX/meta-rules-dat
+# UPDATED: 2026-07-29 04:58:19 UTC
+# HOST: 0
+# HOST-SUFFIX: 4
+# IP-CIDR: 0
+# IP6-CIDR: 0
+# TOTAL: 4
+
+HOST-SUFFIX,binance.charity,Binance
+HOST-SUFFIX,binance.org,Binance
+HOST-SUFFIX,bnbchain.org,Binance
+HOST-SUFFIX,nftstatic.com,Binance

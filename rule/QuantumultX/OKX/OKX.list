@@ -1,0 +1,19 @@
+# NAME: OKX
+# DESCRIPTION: OKX official app and service domain rules
+# AUTHOR: bluelittlerain
+# REPO: https://github.com/bluelittlerain/quantumultx-app-rules
+# SOURCE: OKX official API documentation, v2fly/domain-list-community, MetaCubeX/meta-rules-dat
+# UPDATED: 2026-07-29 04:58:21 UTC
+# HOST: 0
+# HOST-SUFFIX: 7
+# IP-CIDR: 0
+# IP6-CIDR: 0
+# TOTAL: 7
+
+HOST-SUFFIX,okex.com,OKX
+HOST-SUFFIX,okx-dns.com,OKX
+HOST-SUFFIX,okx-dns1.com,OKX
+HOST-SUFFIX,okx-dns2.com,OKX
+HOST-SUFFIX,okx.ac,OKX
+HOST-SUFFIX,okx.cab,OKX
+HOST-SUFFIX,okx.com,OKX

@@ -1,0 +1,13 @@
+# NAME: Binance Regional
+# DESCRIPTION: Optional independent Binance regional service domain rules
+# AUTHOR: bluelittlerain
+# REPO: https://github.com/bluelittlerain/quantumultx-app-rules
+# SOURCE: Binance.US official website and current public upstream rules
+# UPDATED: 2026-07-29 04:58:19 UTC
+# HOST: 0
+# HOST-SUFFIX: 1
+# IP-CIDR: 0
+# IP6-CIDR: 0
+# TOTAL: 1
+
+HOST-SUFFIX,binance.us,Binance

@@ -1,0 +1,43 @@
+# 域名或根域名,排除原因
+akamai.net,shared CDN root used by unrelated services
+akamaiedge.net,shared CDN root used by unrelated services
+amazonaws.com,shared cloud root used by unrelated services
+apple.com,shared Apple service root
+appsflayer.com,unverified misspelling present only in an older community rule
+appsflyer.com,shared attribution root; only approved exact Binance hosts are allowed
+appsflyersdk.com,shared attribution SDK root; only approved exact Binance hosts are allowed
+binance.cc,current ownership or global App use is not sufficiently confirmed
+binance.co,current ownership or global App use is not sufficiently confirmed
+binance.info,current global App use is not sufficiently confirmed
+binance.net,current global App use is not sufficiently confirmed
+binancefuture.com,older community-only entry without sufficient current evidence
+binanceru.net,historical or regional entry not approved for current rules
+binancezh.be,historical mirror without sufficient current official evidence
+binancezh.biz,historical mirror without sufficient current official evidence
+binancezh.cc,historical mirror without sufficient current official evidence
+binancezh.co,historical mirror without sufficient current official evidence
+binancezh.com,historical mirror without sufficient current official evidence
+binancezh.info,historical mirror without sufficient current official evidence
+binancezh.ink,historical mirror without sufficient current official evidence
+binancezh.kim,historical mirror without sufficient current official evidence
+binancezh.link,historical mirror without sufficient current official evidence
+binancezh.live,historical mirror without sufficient current official evidence
+binancezh.mobi,historical mirror without sufficient current official evidence
+binancezh.net,historical mirror without sufficient current official evidence
+binancezh.pro,historical mirror without sufficient current official evidence
+binancezh.sh,historical mirror without sufficient current official evidence
+binancezh.top,historical mirror without sufficient current official evidence
+bmwweb.solutions,opaque upstream backup domain requiring additional current evidence
+bnappweb.black,opaque upstream app domain requiring additional current evidence
+bnappzh.co,older community-only historical entry
+bnbzh.ac,older community-only historical entry
+cloudflare.com,shared CDN and security root
+cloudfront.net,shared CDN root
+firebaseio.com,shared application platform root
+googleapis.com,shared Google API root
+saasexch.cc,possible exchange SaaS infrastructure not confirmed as Binance-exclusive
+saasexch.co,possible exchange SaaS infrastructure not confirmed as Binance-exclusive
+saasexch.com,possible exchange SaaS infrastructure not confirmed as Binance-exclusive
+saasexch.info,possible exchange SaaS infrastructure not confirmed as Binance-exclusive
+saasexch.io,possible exchange SaaS infrastructure not confirmed as Binance-exclusive
+sentry.io,shared error-monitoring root

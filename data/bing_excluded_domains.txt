@@ -1,0 +1,22 @@
+# 域名或根域名,排除原因
+akamai.net,shared CDN root used by unrelated services
+amazonaws.com,shared cloud root used by unrelated services
+apple.com,shared Apple service root
+appsflyer.com,shared attribution root
+azure.com,shared Microsoft cloud root
+azureedge.net,shared Microsoft CDN root
+bingads.com,advertising domain not required for core Bing search
+bingagencyawards.com,campaign domain not required for core Bing search
+bingapistatistics.com,telemetry or API statistics domain not required for core search
+bingsandbox.com,sandbox or historical domain not required for production search
+bingworld.com,campaign domain not required for core Bing search
+cloudfront.net,shared CDN root
+copilot-stg.com,staging service not approved for the optional production AI rules
+doubleclick.net,shared advertising root
+google.com,shared Google root
+live.com,large shared Microsoft consumer-service root
+microsoft.com,large shared Microsoft root; only approved exact hosts are allowed
+microsoftonline.com,large shared Microsoft identity root
+office.com,large shared Microsoft productivity root
+sentry.io,shared error-monitoring root
+windows.com,large shared Microsoft platform root

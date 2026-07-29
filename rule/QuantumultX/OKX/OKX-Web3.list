@@ -1,0 +1,14 @@
+# NAME: OKX Web3
+# DESCRIPTION: Optional OKX Web3, X Layer, and OKLink domain rules
+# AUTHOR: bluelittlerain
+# REPO: https://github.com/bluelittlerain/quantumultx-app-rules
+# SOURCE: OKX public Web3 services and current public upstream rules
+# UPDATED: 2026-07-29 04:58:21 UTC
+# HOST: 0
+# HOST-SUFFIX: 2
+# IP-CIDR: 0
+# IP6-CIDR: 0
+# TOTAL: 2
+
+HOST-SUFFIX,oklink.com,OKX
+HOST-SUFFIX,xlayer.tech,OKX

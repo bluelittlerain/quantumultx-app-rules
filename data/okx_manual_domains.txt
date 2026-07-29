@@ -1,0 +1,10 @@
+# 类型,域名,范围,来源说明
+HOST-SUFFIX,okex.com,main,current blackmatrix7 v2fly and MetaCubeX legacy OKX data
+HOST-SUFFIX,okx-dns.com,main,current v2fly and MetaCubeX dedicated OKX connection data
+HOST-SUFFIX,okx-dns1.com,main,current v2fly and MetaCubeX dedicated OKX connection data
+HOST-SUFFIX,okx-dns2.com,main,current v2fly and MetaCubeX dedicated OKX connection data
+HOST-SUFFIX,okx.ac,main,current v2fly and MetaCubeX dedicated OKX backup domain
+HOST-SUFFIX,okx.cab,main,current v2fly and MetaCubeX dedicated OKX backup domain
+HOST-SUFFIX,okx.com,main,OKX official website REST and WebSocket documentation
+HOST-SUFFIX,oklink.com,web3,OKLink public service and current upstream data
+HOST-SUFFIX,xlayer.tech,web3,OKX X Layer public service and current upstream data

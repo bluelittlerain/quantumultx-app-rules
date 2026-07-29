@@ -1,0 +1,25 @@
+# NAME: Binance
+# DESCRIPTION: Binance official app and service domain rules
+# AUTHOR: bluelittlerain
+# REPO: https://github.com/bluelittlerain/quantumultx-app-rules
+# SOURCE: Binance official documentation, v2fly/domain-list-community, MetaCubeX/meta-rules-dat
+# UPDATED: 2026-07-29 04:58:19 UTC
+# HOST: 2
+# HOST-SUFFIX: 11
+# IP-CIDR: 0
+# IP6-CIDR: 0
+# TOTAL: 13
+
+HOST,zftksc.cdn-settings.appsflyersdk.com,Binance
+HOST,zftksc.launches.appsflyersdk.com,Binance
+HOST-SUFFIX,binance.cloud,Binance
+HOST-SUFFIX,binance.com,Binance
+HOST-SUFFIX,binance.me,Binance
+HOST-SUFFIX,binance.vision,Binance
+HOST-SUFFIX,binanceapi.com,Binance
+HOST-SUFFIX,binancecnt.com,Binance
+HOST-SUFFIX,bnbstatic.com,Binance
+HOST-SUFFIX,bntrace.com,Binance
+HOST-SUFFIX,bsappapi.cc,Binance
+HOST-SUFFIX,bsappapi.com,Binance
+HOST-SUFFIX,bscdnweb.com,Binance

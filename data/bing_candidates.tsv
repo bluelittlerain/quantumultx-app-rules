@@ -1,0 +1,42 @@
+domain	rule_type	scope	status	source	evidence	risk	notes
+bing	HOST-SUFFIX	unknown	needs-review	https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/bing	Microsoft-owned top-level label is too broad for the core rule	high	Not approved
+bing.com	HOST-SUFFIX	main	confirmed	https://www.bing.com	Official Bing search root and current upstream entry	low	Approved core root
+bing.com.cn	HOST-SUFFIX	main	confirmed	https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/bing	Official regional Bing search root in current upstream	low	Approved core regional root
+bing.net	HOST-SUFFIX	main	confirmed	https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/QuantumultX/Bing/Bing.list	Current blackmatrix7 v2fly and MetaCubeX Bing resource root	low	Approved
+bing123.com	HOST-SUFFIX	historical	needs-review	https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/bing	Current upstream entry lacks evidence of core App necessity	medium	Not approved
+bingads.com	HOST-SUFFIX	ads	excluded	https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/bing	Advertising service is not required for core search	high	Excluded
+bingagencyawards.com	HOST-SUFFIX	historical	historical	https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/bing	Campaign domain is not required for core search	high	Excluded
+bingapis.com	HOST-SUFFIX	main	confirmed	https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/bing	Current v2fly and MetaCubeX Bing API root	low	Approved
+bingapistatistics.com	HOST-SUFFIX	telemetry	excluded	https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/bing	Statistics service is not required for core search	high	Excluded
+bingparachute.com	HOST-SUFFIX	historical	needs-review	https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/bing	Current upstream entry lacks core App evidence	medium	Not approved
+bingsandbox.com	HOST-SUFFIX	historical	historical	https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/bing	Sandbox service is not a production search dependency	high	Excluded
+bingvisualsearch.com	HOST-SUFFIX	main	confirmed	https://support.microsoft.com/en-US/bing/using-bing-visual-search	Microsoft documents Bing Visual Search as a Bing feature	low	Approved
+bingworld.com	HOST-SUFFIX	historical	historical	https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/bing	Campaign domain is not required for core search	high	Excluded
+bj1.api.bing.com	HOST	main	confirmed	https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/bing	Current regional upstream host is already covered by bing.com	low	Parent-covered; no redundant HOST
+bluehatnights.com	HOST-SUFFIX	historical	historical	https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/bing	Event domain is unrelated to core Bing search	high	Excluded
+cn.bing.com	HOST-SUFFIX	main	confirmed	https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/bing	Current regional upstream host is already covered by bing.com	low	Parent-covered; no redundant rule
+cn.bing.net	HOST-SUFFIX	main	confirmed	https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/bing	Current regional upstream host is already covered by bing.net	low	Parent-covered; no redundant rule
+cn.mm.bing.net	HOST-SUFFIX	main	confirmed	https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/bing	Current regional upstream host is already covered by bing.net	low	Parent-covered; no redundant rule
+copilot-stg.com	HOST-SUFFIX	ai	excluded	https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/bing	Staging service is not approved for production use	high	Excluded
+copilot.cloud.microsoft	HOST-SUFFIX	ai	optional	https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/bing	Current v2fly and MetaCubeX Copilot service root	medium	Optional AI resource
+copilot.com	HOST-SUFFIX	ai	optional	https://www.copilot.com	Microsoft Copilot public service and current upstream entry	low	Optional AI resource
+copilot.microsoft.com	HOST	ai	optional	https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/bing	Current upstream identifies the exact Copilot host under a shared Microsoft root	medium	Exact HOST only
+dictate.ms	HOST-SUFFIX	shared	needs-review	https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/bing	Microsoft speech service may also be used by non-Bing products	high	Not approved
+ditu.live.com	HOST	shared	excluded	https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/bing	Regional map host is under the large shared live.com root	high	Excluded from Bing search
+emoi-cncdn.bing.com	HOST	main	confirmed	https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/bing	Current regional upstream host is already covered by bing.com	low	Parent-covered; no redundant HOST
+flipwithsurface.com	HOST-SUFFIX	historical	historical	https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/bing	Surface campaign domain is unrelated to core Bing search	high	Excluded
+location.microsoft.com	HOST	shared	excluded	https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/bing	Exact Microsoft location host may be shared by multiple Microsoft products	high	Excluded pending App-specific evidence
+masalladeloslimites.com	HOST-SUFFIX	historical	historical	https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/bing	Campaign domain is unrelated to core Bing search	high	Excluded
+microsoft-give.com	HOST-SUFFIX	historical	historical	https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/bing	Campaign domain is unrelated to core Bing search	high	Excluded
+microsoftcloudsummit.com	HOST-SUFFIX	historical	historical	https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/bing	Event domain is unrelated to core Bing search	high	Excluded
+microsoftdiplomados.com	HOST-SUFFIX	historical	historical	https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/bing	Campaign domain is unrelated to core Bing search	high	Excluded
+microsoftlatamholiday.com	HOST-SUFFIX	historical	historical	https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/bing	Campaign domain is unrelated to core Bing search	high	Excluded
+microsoftmxfilantropia.com	HOST-SUFFIX	historical	historical	https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/bing	Campaign domain is unrelated to core Bing search	high	Excluded
+microsoftpartnersolutions.com	HOST-SUFFIX	historical	historical	https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/bing	Partner campaign domain is unrelated to core Bing search	high	Excluded
+msunlimitedcloudsummit.com	HOST-SUFFIX	historical	historical	https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/bing	Event domain is unrelated to core Bing search	high	Excluded
+office365love.com	HOST-SUFFIX	historical	historical	https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/bing	Office campaign domain is unrelated to core Bing search	high	Excluded
+office365tw.com	HOST-SUFFIX	historical	historical	https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/bing	Office campaign domain is unrelated to core Bing search	high	Excluded
+r.bing.com	HOST-SUFFIX	main	confirmed	https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/bing	Current Bing resource host is already covered by bing.com	low	Parent-covered; no redundant rule
+renovacionoffice.com	HOST-SUFFIX	historical	historical	https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/bing	Office campaign domain is unrelated to core Bing search	high	Excluded
+sprinklesapp.com	HOST-SUFFIX	historical	historical	https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/bing	Unrelated historical Microsoft app domain	high	Excluded
+th.bing.com	HOST-SUFFIX	main	confirmed	https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/bing	Current Bing image resource host is already covered by bing.com	low	Parent-covered; no redundant rule

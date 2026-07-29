@@ -1,0 +1,10 @@
+# 域名或根域名,排除原因
+akamai.net,shared CDN root used by unrelated services
+amazonaws.com,shared cloud root used by unrelated services
+apple.com,shared Apple service root
+appsflyer.com,shared attribution root
+cloudflare.net,shared CDN root; an OKX CNAME target is not a client request domain
+cloudfront.net,shared CDN root
+googleapis.com,shared Google API root
+okx.com.cdn.cloudflare.net,CNAME infrastructure target not shown as a direct client request host
+sentry.io,shared error-monitoring root

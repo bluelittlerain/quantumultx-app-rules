@@ -1,0 +1,9 @@
+# 类型,域名,范围,来源说明
+HOST-SUFFIX,bing.com,main,Microsoft Bing official website and current upstream data
+HOST-SUFFIX,bing.com.cn,main,official Bing regional search domain and current upstream data
+HOST-SUFFIX,bing.net,main,current v2fly MetaCubeX and blackmatrix7 Bing data
+HOST-SUFFIX,bingapis.com,main,current v2fly and MetaCubeX Bing API data
+HOST-SUFFIX,bingvisualsearch.com,main,Microsoft Bing Visual Search service and current upstream data
+HOST,copilot.microsoft.com,ai,Microsoft Copilot public service and current Bing upstream data
+HOST-SUFFIX,copilot.cloud.microsoft,ai,Microsoft Copilot public service and current Bing upstream data
+HOST-SUFFIX,copilot.com,ai,Microsoft Copilot public service and current Bing upstream data

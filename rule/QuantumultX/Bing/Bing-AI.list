@@ -1,0 +1,15 @@
+# NAME: Bing AI
+# DESCRIPTION: Optional Bing Copilot Search and AI service domain rules
+# AUTHOR: bluelittlerain
+# REPO: https://github.com/bluelittlerain/quantumultx-app-rules
+# SOURCE: Microsoft public Copilot services and current public upstream rules
+# UPDATED: 2026-07-29 04:59:16 UTC
+# HOST: 1
+# HOST-SUFFIX: 2
+# IP-CIDR: 0
+# IP6-CIDR: 0
+# TOTAL: 3
+
+HOST,copilot.microsoft.com,Bing
+HOST-SUFFIX,copilot.cloud.microsoft,Bing
+HOST-SUFFIX,copilot.com,Bing

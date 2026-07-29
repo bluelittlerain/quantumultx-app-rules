@@ -1,0 +1,11 @@
+domain	rule_type	scope	status	source	evidence	risk	notes
+okex.com	HOST-SUFFIX	main	confirmed	https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/QuantumultX/OKX/OKX.list	Current blackmatrix7 v2fly and MetaCubeX legacy OKX entry	low	Approved core root
+oklink.com	HOST-SUFFIX	web3	optional	https://www.oklink.com	OKLink public service and current upstream entry	low	Optional Web3 resource
+okx-dns.com	HOST-SUFFIX	main	confirmed	https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/okx	Current v2fly and MetaCubeX dedicated OKX connection entry	low	Approved connection root
+okx-dns1.com	HOST-SUFFIX	main	confirmed	https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/okx	Current v2fly and MetaCubeX dedicated OKX connection entry	low	Approved connection root
+okx-dns2.com	HOST-SUFFIX	main	confirmed	https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/okx	Current v2fly and MetaCubeX dedicated OKX connection entry	low	Approved connection root
+okx.ac	HOST-SUFFIX	main	confirmed	https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/okx	Current v2fly and MetaCubeX dedicated OKX backup entry	medium	Approved backup root
+okx.cab	HOST-SUFFIX	main	confirmed	https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/okx	Current v2fly and MetaCubeX dedicated OKX backup entry	medium	Approved backup root
+okx.com	HOST-SUFFIX	main	confirmed	https://www.okx.com/docs-v5	Official REST and WebSocket documentation uses openapi and ws hosts under okx.com	low	Approved core root
+okx.com.cdn.cloudflare.net	HOST-SUFFIX	shared	excluded	https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/okx	CNAME target is shared Cloudflare infrastructure and not shown as a direct client host	high	Excluded
+xlayer.tech	HOST-SUFFIX	web3	optional	https://www.xlayer.tech	OKX X Layer public service and current upstream entry	low	Optional Web3 resource
