@@ -1,0 +1,35 @@
+# 域名或根域名,排除原因
+akamai.net,shared CDN root used by unrelated services
+akamaiedge.net,shared CDN root used by unrelated services
+amazonaws.com,shared cloud root used by unrelated services
+apple.com,shared Apple service root
+appsflyer.com,shared mobile attribution root
+appsflyersdk.com,shared mobile attribution SDK root
+branch.io,shared mobile deep-link platform
+breakoutprop.com,separate prop-trading product rather than Kraken Pro core
+cdn.cloudflare.net,shared Cloudflare CDN namespace
+cloudflare.com,shared CDN and security root
+cloudflare.net,shared CDN and security root
+cloudfront.net,shared CDN root
+firebaseapp.com,shared application platform root
+firebaseio.com,shared application platform root
+google.com,shared Google service root
+googleapis.com,shared Google API root
+gstatic.com,shared Google static-resource root
+icloud.com,shared Apple cloud root
+inkonchain.com,separate onchain ecosystem service rather than Kraken Pro core
+krak.app,separate Krak app rather than Kraken Pro
+kraken.io,unrelated image-optimization service
+kraken.pro,unverified brand-confusion domain absent official Kraken sources
+kraken.tech,unrelated energy-technology platform
+kraken.zone,insufficient current direct official evidence
+microsoft.com,shared Microsoft service root
+mzstatic.com,shared Apple media root
+onelink.me,shared mobile attribution and redirect platform
+payward.com,corporate service root not proven necessary for Kraken Pro clients
+sentry.io,shared error-monitoring root
+walletconnect.com,shared wallet connectivity service
+walletconnect.org,shared wallet connectivity service
+xstocks.fi,separate product site not proven necessary for Kraken Pro core
+zdassets.com,shared Zendesk asset root
+zendesk.com,shared customer-support platform root

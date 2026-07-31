@@ -2,7 +2,7 @@
 
 一个可自动维护、尽量降低误匹配范围的 Quantumult X 应用与服务分流规则集合。
 
-当前提供 Bybit、Club Sim、Binance、OKX、Bing 和 Ether.fi 独立规则，未来可继续扩展其他应用或服务。每个项目均使用独立目录、独立 Raw 链接和独立自动更新流程，可以单独导入并绑定策略，不共享任何个人配置。同一个 GitHub 仓库不代表不同 App 的规则被合并。
+当前提供 Bybit、Club Sim、Binance、OKX、Bing、Ether.fi 和 Kraken Pro 独立规则，未来可继续扩展其他应用或服务。每个项目均使用独立目录、独立 Raw 链接和独立自动更新流程，可以单独导入并绑定策略，不共享任何个人配置。同一个 GitHub 仓库不代表不同 App 的规则被合并。
 
 ## Available Rules
 
@@ -54,6 +54,15 @@
 - 主规则：[EtherFi.list](https://raw.githubusercontent.com/bluelittlerain/quantumultx-app-rules/main/rule/QuantumultX/EtherFi/EtherFi.list)，<!-- ETHERFI_MAIN_COUNTS_START -->1 条（HOST 0，HOST-SUFFIX 1，IP-CIDR 0，IP6-CIDR 0）<!-- ETHERFI_MAIN_COUNTS_END -->；<!-- ETHERFI_MAIN_UPDATED_START -->2026-07-29 06:31:42 UTC<!-- ETHERFI_MAIN_UPDATED_END -->
 - 说明：[Ether.fi README](rule/QuantumultX/EtherFi/README.md)
 
+### Kraken Pro
+
+- 目录：[rule/QuantumultX/KrakenPro/](rule/QuantumultX/KrakenPro/)
+- 用途：Kraken Pro 核心交易、登录、账户、资产、Spot/Futures API、WebSocket、帮助与第一方静态资源域名分流。
+- 主规则：[KrakenPro.list](https://raw.githubusercontent.com/bluelittlerain/quantumultx-app-rules/main/rule/QuantumultX/KrakenPro/KrakenPro.list)，<!-- KRAKENPRO_MAIN_COUNTS_START -->3 条（HOST 0，HOST-SUFFIX 3，IP-CIDR 0，IP6-CIDR 0）<!-- KRAKENPRO_MAIN_COUNTS_END -->；<!-- KRAKENPRO_MAIN_UPDATED_START -->2026-07-31 15:48:14 UTC<!-- KRAKENPRO_MAIN_UPDATED_END -->
+- 数据来源：Kraken 官方网站、开发者文档、支持中心、官方 App 商店页面、v2fly 与 MetaCubeX 当前 Kraken 数据。
+- 限制：不包含 Kraken Wallet、共享 CDN、第三方 SDK、公共 RPC、区块浏览器或未经确认的品牌相似域名。
+- 说明：[Kraken Pro README](rule/QuantumultX/KrakenPro/README.md)
+
 ## Usage
 
 1. 打开 Quantumult X，进入 Filter Resources。
@@ -93,6 +102,7 @@ python3 scripts/validate_binance_rules.py
 python3 scripts/validate_okx_rules.py
 python3 scripts/validate_bing_rules.py
 python3 scripts/validate_etherfi_rules.py
+python3 scripts/validate_krakenpro_rules.py
 ```
 
 ## Privacy

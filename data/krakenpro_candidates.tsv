@@ -1,0 +1,33 @@
+domain	rule_type	scope	status	source	evidence	risk	notes
+api.kraken.com	HOST	main	confirmed	https://docs.kraken.com/	Official Kraken developer quickstart uses this Spot REST host	low	Covered by kraken.com
+app.kraken.com	HOST	main	confirmed	https://support.kraken.com/articles/360001332083-kraken-s-official-mobile-apps	Official mobile-app page links to this Kraken app host	low	Covered by kraken.com
+assets-cms.kraken.com	HOST	main	confirmed	https://www.kraken.com/slp/kraken-pro-app	Official Kraken Pro page serves app imagery from this host	low	Covered by kraken.com
+assets.kraken.com	HOST	main	confirmed	https://www.kraken.com/	Official site static-resource host	low	Covered by kraken.com
+breakoutprop.com	HOST-SUFFIX	unknown	excluded	https://www.kraken.com/	Official navigation identifies a separate prop-trading product	high	Not Kraken Pro core
+cloudflare.com	HOST-SUFFIX	shared	excluded	https://support.kraken.com/articles/360022326871-kraken-websocket-api-frequently-asked-questions	Kraken confirms Cloudflare intermediates WebSocket traffic but the root is shared	high	Never route the shared root
+cloudfront.net	HOST-SUFFIX	shared	excluded	https://www.kraken.com/	Shared CDN root without a verified Kraken-dedicated client host	high	Excluded
+docs.kraken.com	HOST	main	confirmed	https://docs.kraken.com/	Official Kraken developer documentation	low	Covered by kraken.com
+futures.kraken.com	HOST	main	confirmed	https://docs.kraken.com/api/docs/futures-api/websocket/book/	Official Futures WebSocket documentation uses this host	low	Covered by kraken.com
+id.kraken.com	HOST	main	confirmed	https://support.kraken.com/articles/360049788312-kraken-pro-mobile-app-frequently-asked-questions-	Official Kraken Pro FAQ links sign-in to this host	low	Covered by kraken.com
+inkonchain.com	HOST-SUFFIX	unknown	excluded	https://support.kraken.com/articles/kraken-verify	Officially related onchain ecosystem service but not Kraken Pro core	medium	No Web3 output is justified
+krak.app	HOST-SUFFIX	unknown	excluded	https://support.kraken.com/articles/360001332083-kraken-s-official-mobile-apps	Official Krak product is a separate app	medium	Not Kraken Pro core
+kraken.com	HOST-SUFFIX	main	confirmed	https://www.kraken.com/	Official root covers Pro web login API WebSocket Futures assets status and support	low	Approved core root
+kraken.io	HOST-SUFFIX	unknown	excluded	https://kraken.io/	Independent image-optimization service that is not the Kraken exchange	high	Brand collision
+kraken.onl	HOST-SUFFIX	main	confirmed	https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/kraken	Current v2fly and MetaCubeX Kraken data include this dedicated deep-link root	low	Approved first-party app-link root
+kraken.pro	HOST-SUFFIX	unknown	excluded	https://support.kraken.com/articles/201351886-how-to-follow-kraken-on-social-media	Not identified by Kraken official communications or current trusted upstreams	high	Potential brand-confusion domain
+kraken.tech	HOST-SUFFIX	unknown	excluded	https://www.kraken.tech/	Unrelated energy-technology platform	high	Brand collision
+kraken.zone	HOST-SUFFIX	unknown	needs-review	https://www.kraken.com/	Seen in older public web policy observations but absent current Kraken-specific upstreams	high	Excluded pending current direct official evidence
+krakenpro.onl	HOST-SUFFIX	main	confirmed	https://support.kraken.com/articles/360001332083-kraken-s-official-mobile-apps	Current official Kraken mobile-app page links the Pro app through this root	low	Approved Kraken Pro deep-link root
+onelink.me	HOST-SUFFIX	shared	excluded	https://support.kraken.com/articles/360001332083-kraken-s-official-mobile-apps	Shared mobile attribution and redirect platform	high	Do not route the shared root
+payward.com	HOST-SUFFIX	unknown	excluded	https://www.kraken.com/	Corporate or platform service root without evidence of Kraken Pro client necessity	medium	Not approved for app routing
+pro.kraken.com	HOST	main	confirmed	https://www.kraken.com/slp/kraken-pro-app	Official Pro trading entry	low	Covered by kraken.com
+proapp.kraken.com	HOST	main	confirmed	https://www.kraken.com/slp/kraken-pro-app	Official Kraken Pro app download entry	low	Covered by kraken.com
+sentry.io	HOST-SUFFIX	telemetry	excluded	https://www.kraken.com/	Shared error-monitoring service	high	Excluded
+status.kraken.com	HOST	main	confirmed	https://status.kraken.com/	Official Kraken service-status site	low	Covered by kraken.com
+support.kraken.com	HOST	main	confirmed	https://support.kraken.com/	Official support center	low	Covered by kraken.com
+ws-auth.kraken.com	HOST	main	confirmed	https://support.kraken.com/articles/360022326871-kraken-websocket-api-frequently-asked-questions	Official private account and trading WebSocket host	low	Covered by kraken.com
+ws-l3.kraken.com	HOST	main	confirmed	https://docs-legacy.kraken.com/api/docs/change-log/	Official change log identifies the current L3 WebSocket host	low	Covered by kraken.com
+ws.kraken.com	HOST	main	confirmed	https://support.kraken.com/articles/360022326871-kraken-websocket-api-frequently-asked-questions	Official public market-data WebSocket host	low	Covered by kraken.com
+xstocks.fi	HOST-SUFFIX	unknown	excluded	https://www.kraken.com/	Separate tokenized-equities product site without Kraken Pro app-host evidence	medium	Not approved for core routing
+zdassets.com	HOST-SUFFIX	shared	excluded	https://support.kraken.com/	Shared Zendesk asset platform	high	Do not route the shared root
+zendesk.com	HOST-SUFFIX	shared	excluded	https://support.kraken.com/	Shared customer-support platform	high	Do not route the shared root

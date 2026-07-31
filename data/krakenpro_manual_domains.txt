@@ -1,0 +1,4 @@
+# 类型,域名,范围,来源说明
+HOST-SUFFIX,kraken.com,main,Kraken official website API documentation support center and app-store listings
+HOST-SUFFIX,kraken.onl,main,current v2fly and MetaCubeX Kraken deep-link data
+HOST-SUFFIX,krakenpro.onl,main,current Kraken official mobile-app page links to this Pro app deep-link root

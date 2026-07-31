@@ -1,0 +1,15 @@
+# NAME: KrakenPro
+# DESCRIPTION: Kraken Pro official app and service domain rules
+# AUTHOR: bluelittlerain
+# REPO: https://github.com/bluelittlerain/quantumultx-app-rules
+# SOURCE: Kraken official documentation, v2fly/domain-list-community, MetaCubeX/meta-rules-dat
+# UPDATED: 2026-07-31 15:48:14 UTC
+# HOST: 0
+# HOST-SUFFIX: 3
+# IP-CIDR: 0
+# IP6-CIDR: 0
+# TOTAL: 3
+
+HOST-SUFFIX,kraken.com,KrakenPro
+HOST-SUFFIX,kraken.onl,KrakenPro
+HOST-SUFFIX,krakenpro.onl,KrakenPro
