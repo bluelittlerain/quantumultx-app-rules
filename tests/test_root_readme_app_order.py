@@ -131,6 +131,15 @@ class RootReadmeAppOrderTests(unittest.TestCase):
         names = [entry.display_name for entry in self.entries]
         self.assertIn("Wirex One", names)
 
+    def test_coca_is_listed(self) -> None:
+        names = [entry.display_name for entry in self.entries]
+        self.assertIn("COCA", names)
+
+    def test_coca_is_between_club_sim_and_etherfi(self) -> None:
+        names = [entry.display_name for entry in self.entries]
+        self.assertLess(names.index("Club Sim"), names.index("COCA"))
+        self.assertLess(names.index("COCA"), names.index("Ether.fi"))
+
     def test_intro_order_matches_available_rules(self) -> None:
         names = [entry.display_name for entry in self.entries]
         self.assertEqual(parse_intro_names(self.text), names)

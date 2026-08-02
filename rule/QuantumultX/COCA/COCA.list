@@ -1,0 +1,14 @@
+# NAME: COCA
+# DESCRIPTION: COCA crypto card and wallet official app and service domain rules
+# AUTHOR: bluelittlerain
+# REPO: https://github.com/bluelittlerain/quantumultx-app-rules
+# SOURCE: COCA official sources and reviewed public upstreams
+# UPDATED: 2026-08-02 03:04:04 UTC
+# HOST: 1
+# HOST-SUFFIX: 1
+# IP-CIDR: 0
+# IP6-CIDR: 0
+# TOTAL: 2
+
+HOST,wwallet.app.link,COCA
+HOST-SUFFIX,coca.xyz,COCA

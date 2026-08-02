@@ -814,6 +814,22 @@ SECRET_PATTERNS = (
         re.compile(r"-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----"),
     ),
     (
+        "mnemonic or recovery phrase",
+        re.compile(
+            r"(?i)\b(?:mnemonic|seed phrase|recovery phrase|助记词|助記詞|"
+            r"恢复短语|恢復短語)\s*[:=]\s*"
+            r"(?:[a-z]{3,}\s+){11,23}[a-z]{3,}\b"
+        ),
+    ),
+    (
+        "recovery QR payload",
+        re.compile(
+            r"(?i)\b(?:recovery|backup|恢复|恢復)[ _-]?"
+            r"(?:qr|二维码|二維碼)(?:[ _-]?(?:data|payload|content))?"
+            r"\s*[:=]\s*[A-Za-z0-9+/_=-]{32,}"
+        ),
+    ),
+    (
         "UUID-like credential",
         re.compile(
             r"\b[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-"

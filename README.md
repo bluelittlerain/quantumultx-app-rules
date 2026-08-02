@@ -2,7 +2,7 @@
 
 一个可自动维护、尽量降低误匹配范围的 Quantumult X 应用与服务分流规则集合。
 
-当前提供 Binance、Bing、Bybit、Club Sim、Ether.fi、Kraken Pro、OKX 和 Wirex One 等独立规则。
+当前提供 Binance、Bing、Bybit、Club Sim、COCA、Ether.fi、Kraken Pro、OKX 和 Wirex One 等独立规则。
 
 每项规则均使用独立目录、独立 Raw 链接和独立更新流程，可以分别导入并绑定策略。同一个 GitHub 仓库不代表不同 App 的规则被合并。
 
@@ -40,6 +40,13 @@
 - 主规则：[ClubSim.list](https://raw.githubusercontent.com/bluelittlerain/quantumultx-app-rules/main/rule/QuantumultX/ClubSim/ClubSim.list)（<!-- CLUBSIM_MAIN_COUNTS_START -->2 条（HOST 1，HOST-SUFFIX 1，IP-CIDR 0，IP6-CIDR 0）<!-- CLUBSIM_MAIN_COUNTS_END -->）
 - 可选网络规则：[ClubSim-Network.list](https://raw.githubusercontent.com/bluelittlerain/quantumultx-app-rules/main/rule/QuantumultX/ClubSim/ClubSim-Network.list)（<!-- CLUBSIM_NETWORK_COUNTS_START -->5 条（HOST 5，HOST-SUFFIX 0，IP-CIDR 0，IP6-CIDR 0）<!-- CLUBSIM_NETWORK_COUNTS_END -->）
 - 说明：[Club Sim README](rule/QuantumultX/ClubSim/README.md)
+
+### COCA
+
+- 目录：[rule/QuantumultX/COCA/](rule/QuantumultX/COCA/)
+- 用途：COCA: Crypto Card & Wallet 官方应用、钱包、卡片、帮助、状态与专用深链域名分流。
+- 主规则：[COCA.list](https://raw.githubusercontent.com/bluelittlerain/quantumultx-app-rules/main/rule/QuantumultX/COCA/COCA.list)（<!-- COCA_MAIN_COUNTS_START -->2 条（HOST 1，HOST-SUFFIX 1，IP-CIDR 0，IP6-CIDR 0）<!-- COCA_MAIN_COUNTS_END -->，<!-- COCA_MAIN_UPDATED_START -->2026-08-02 03:04:04 UTC<!-- COCA_MAIN_UPDATED_END -->）
+- 说明：[COCA README](rule/QuantumultX/COCA/README.md)
 
 ### Ether.fi
 
@@ -102,6 +109,7 @@ python3 scripts/validate_binance_rules.py
 python3 scripts/validate_bing_rules.py
 python3 scripts/validate_bybit_rules.py
 python3 scripts/validate_clubsim_rules.py
+python3 scripts/validate_coca_rules.py
 python3 scripts/validate_etherfi_rules.py
 python3 scripts/validate_krakenpro_rules.py
 python3 scripts/validate_okx_rules.py

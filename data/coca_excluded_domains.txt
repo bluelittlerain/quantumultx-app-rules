@@ -1,0 +1,85 @@
+# 域名或根域名,排除原因
+1inch.io,shared exchange and Web3 provider root
+akamai.net,shared CDN root
+akamaiedge.net,shared CDN root
+amplitude.com,shared analytics platform root
+amazon.com,shared commerce and cloud root
+amazonaws.com,shared cloud platform root
+api.gitbook.com,shared documentation platform API host
+app.link,shared Branch deep-link platform root
+apple.com,shared Apple service root
+apps.apple.com,shared App Store host
+appsflyer.com,shared attribution platform root
+appsflyersdk.com,shared attribution SDK root
+atlassian.com,shared status and collaboration platform root
+b2b-card-security.wirexapp.com,Wirex B2B card host observed across multiple partner apps and not COCA dedicated
+braze.com,shared customer-engagement and messaging platform root
+browser.sentry-cdn.com,shared error-reporting loader host
+cdnjs.cloudflare.com,shared public CDN host
+cloudflare.com,shared CDN and security platform root
+cloudflare.net,shared CDN and security platform root
+cloudfront.net,shared CDN root
+coca-cola.com,Coca-Cola beverage brand root unrelated to COCA Wallet
+coca-colacompany.com,Coca-Cola corporate root unrelated to COCA Wallet
+coca.com,unrelated Coca Holding website and not a verified COCA Wallet service root
+discord.com,shared social platform root
+doubleclick.net,shared advertising platform root
+editorx.io,shared website-builder platform root
+facebook.com,shared social platform root
+facebook.net,shared social SDK root
+firebaseapp.com,shared application platform root
+firebaseio.com,shared application platform root
+freshdesk.com,shared helpdesk platform root
+freshworks.com,shared helpdesk vendor root
+gauntlet.xyz,shared risk-management provider root
+gitbook.com,shared documentation platform root
+google-analytics.com,shared analytics platform root
+google.com,shared Google service root
+googleapis.com,shared Google API root
+googleusercontent.com,shared Google content root
+googletagmanager.com,shared analytics platform root
+gstatic.com,shared Google static root
+icloud.com,shared Apple cloud root
+instagram.com,shared social platform root
+intercom.io,shared customer-support platform root
+ipify.org,shared public IP lookup service root
+ipregistry.co,shared IP geolocation service root
+linkedin.com,shared social platform root
+mastercard.com,shared card-scheme root
+medium.com,shared publishing platform root
+microsoft.com,shared Microsoft service root
+microsoftonline.com,shared Microsoft identity root
+morpho.org,shared DeFi protocol root
+mzstatic.com,shared Apple static root
+onesignal.com,shared push-notification platform root
+parastorage.com,shared website-builder storage root
+paypal.com,shared payment platform root
+play.google.com,shared Google Play host
+privy.io,shared key-management and identity platform root
+s3.eu-central-1.amazonaws.com,shared object-storage host referenced by the COCA help center
+sentry-cdn.com,shared error-reporting CDN root
+sentry.io,shared error-reporting platform root
+spatium.net,historical technology-partner reference without evidence of a current dedicated COCA endpoint
+static-2v.gitbook.com,shared GitBook static host
+static.wixstatic.com,shared website-builder CDN host
+statuspage.io,shared status platform root
+stripe.com,shared payment platform root
+sumsub.com,shared identity and KYC platform root
+t.me,shared messaging platform host
+tiktok.com,shared social platform root
+twitter.com,shared social platform root
+vault-service-eu.freshworks.com,shared helpdesk vault service referenced by the COCA support portal
+visa.com,shared card-scheme root
+walletconnect.com,shared wallet interoperability root
+walletconnect.org,shared wallet interoperability root
+wirex.app.link,Classic Wirex brand deep-link host not proven to be COCA dedicated
+wirexapp.com,Wirex shared and product infrastructure root; only a proven COCA-dedicated exact host may be considered
+wirexapp.tech,Wirex BaaS sandbox root not confirmed for the COCA consumer app
+wirexone.freshdesk.com,dedicated Wirex One help tenant unrelated to COCA support
+wirexpaychain.com,Wirex Pay partner infrastructure not confirmed for COCA
+wix.com,shared website-builder platform root
+wixapps.net,shared website-builder application root
+wixstatic.com,shared website-builder CDN root
+www-coca-xyz.filesusr.com,brand-specific website asset tenant but not required for COCA app core traffic
+x.com,shared social platform root
+youtube.com,shared video platform root

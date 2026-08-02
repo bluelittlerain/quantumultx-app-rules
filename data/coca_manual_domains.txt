@@ -1,0 +1,3 @@
+# 类型,域名,范围,来源说明
+HOST,wwallet.app.link,coca-core,Public Apple and Android association files bind this exact Branch tenant to com.wirex.wallet and the iOS link redirects to App Store ID 1594165139
+HOST-SUFFIX,coca.xyz,coca-core,COCA official website documentation help center terms privacy app listings and status page identify this first-party root
