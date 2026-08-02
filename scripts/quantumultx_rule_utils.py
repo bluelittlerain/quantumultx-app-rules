@@ -83,11 +83,17 @@ SHARED_ROOTS = frozenset(
         "gstatic.com",
         "icloud.com",
         "live.com",
+        "mastercard.com",
         "microsoft.com",
         "microsoftonline.com",
         "mzstatic.com",
         "office.com",
+        "paypal.com",
+        "privy.io",
         "sentry.io",
+        "stripe.com",
+        "visa.com",
+        "walletconnect.com",
         "windows.com",
     }
 )
@@ -144,6 +150,7 @@ class AppConfig:
     readme_relatives: tuple[str, ...]
     outputs: tuple[OutputSpec, ...]
     user_agent_component: str
+    candidate_scopes: tuple[str, ...] = ()
 
 
 @dataclasses.dataclass
@@ -822,9 +829,37 @@ SECRET_PATTERNS = (
         "password assignment",
         re.compile(r"(?i)\b(?:password|passwd)\s*[:=]\s*[\"']?[A-Za-z0-9._~+/\-=]{6,}"),
     ),
+    (
+        "token assignment",
+        re.compile(r"(?i)\b(?:access[_ -]?token|session[_ -]?token)\s*[:=]\s*[\"']?[A-Za-z0-9._~+/\-=]{8,}"),
+    ),
+    (
+        "API key assignment",
+        re.compile(r"(?i)\bapi[_ -]?key\s*[:=]\s*[\"']?[A-Za-z0-9._~+/\-=]{8,}"),
+    ),
+    (
+        "Authorization header",
+        re.compile(r"(?im)^\s*authorization\s*:\s*(?:bearer|basic)\s+[A-Za-z0-9._~+/\-=]{8,}"),
+    ),
+    (
+        "Cookie header",
+        re.compile(r"(?im)^\s*(?:cookie|set-cookie)\s*:\s*\S.{5,}"),
+    ),
+    (
+        "wallet address",
+        re.compile(r"(?i)\b0x[0-9a-f]{40}\b"),
+    ),
+    (
+        "phone number",
+        re.compile(
+            r"(?i)\b(?:phone|mobile|telephone|手机号|手機號)"
+            r"(?:\s+number)?\s*[:=]\s*\+?\d[\d ()-]{6,}\d"
+        ),
+    ),
 )
 LOCAL_PATH_PATTERNS = (
     re.compile(r"(?i)\b[A-Z]:\\Users\\"),
+    re.compile(r"(?i)(?<![A-Za-z0-9])(?:[A-Z]:[\\/]|\\\\[^\\\s]+\\[^\\\s]+\\)"),
     re.compile(r"(?<!\w)/(?:Users|home)/[^/\s]+/"),
 )
 PRIVACY_PATTERNS = (
@@ -837,6 +872,38 @@ PRIVACY_PATTERNS = (
     re.compile(r"维护者.{0,12}(?:使用|所在|购买|持有)"),
 )
 
+CARD_CANDIDATE_RE = re.compile(r"(?<!\d)(?:\d[ -]?){13,19}(?!\d)")
+IBAN_CANDIDATE_RE = re.compile(
+    r"(?i)\b[A-Z]{2}\d{2}(?:[ ]?[A-Z0-9]){11,30}\b"
+)
+
+
+def _luhn_valid(value: str) -> bool:
+    digits = [int(character) for character in value if character.isdigit()]
+    if not 13 <= len(digits) <= 19 or len(set(digits)) == 1:
+        return False
+    total = 0
+    parity = len(digits) % 2
+    for index, digit in enumerate(digits):
+        if index % 2 == parity:
+            digit *= 2
+            if digit > 9:
+                digit -= 9
+        total += digit
+    return total % 10 == 0
+
+
+def _iban_valid(value: str) -> bool:
+    compact = re.sub(r"\s+", "", value).upper()
+    if not 15 <= len(compact) <= 34:
+        return False
+    rearranged = compact[4:] + compact[:4]
+    numeric = "".join(
+        character if character.isdigit() else str(ord(character) - 55)
+        for character in rearranged
+    )
+    return int(numeric) % 97 == 1
+
 
 def find_sensitive(text: str) -> list[str]:
     findings: list[str] = []
@@ -846,6 +913,10 @@ def find_sensitive(text: str) -> list[str]:
     for pattern in LOCAL_PATH_PATTERNS:
         if pattern.search(text):
             findings.append("local absolute path")
+    if any(_luhn_valid(match.group(0)) for match in CARD_CANDIDATE_RE.finditer(text)):
+        findings.append("payment card number")
+    if any(_iban_valid(match.group(0)) for match in IBAN_CANDIDATE_RE.finditer(text)):
+        findings.append("IBAN")
     return findings
 
 
@@ -987,7 +1058,12 @@ def validate_service(
     allowed_scopes = {spec.scope for spec in config.outputs}
     candidate_path = root / config.candidates_relative
     if candidate_path.is_file():
-        errors.extend(validate_candidate_tsv(candidate_path, allowed_scopes))
+        errors.extend(
+            validate_candidate_tsv(
+                candidate_path,
+                allowed_scopes | set(config.candidate_scopes),
+            )
+        )
     try:
         manual_entries = parse_manual(
             _read_utf8(root / config.manual_relative), allowed_scopes

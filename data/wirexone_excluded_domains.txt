@@ -1,0 +1,68 @@
+# 域名或根域名,排除原因
+alchemy.com,shared blockchain RPC provider root
+arbiscan.io,shared block-explorer root
+basescan.org,shared block-explorer root
+blastapi.io,shared blockchain RPC provider root
+cloudflare-eth.com,shared public blockchain gateway root
+coinbase.com,shared wallet and payment provider root
+drpc.org,shared blockchain RPC provider root
+etherscan.io,shared block-explorer root
+infura.io,shared blockchain RPC provider root
+moonpay.com,shared payment provider root
+polygonscan.com,shared block-explorer root
+privy.systems,shared key-management RPC root
+publicnode.com,shared blockchain RPC provider root
+solana.com,shared blockchain network root
+trongrid.io,shared blockchain RPC provider root
+akamai.net,shared CDN root
+akamaiedge.net,shared CDN root
+amazon.com,shared commerce and cloud root
+amazonaws.com,shared cloud platform root
+app.link,shared Branch deep-link platform root
+apple.com,shared Apple service root
+appsflyer.com,shared attribution platform root
+appsflyersdk.com,shared attribution SDK root
+apps.apple.com,shared App Store host
+arc.network,shared Circle blockchain network
+atlassian.com,shared status and collaboration platform
+circle.com,shared stablecoin and blockchain provider
+cloudflare.com,shared CDN and security platform root
+cloudflare.net,shared CDN and security platform root
+cloudfront.net,shared CDN root
+doubleclick.net,shared advertising platform root
+facebook.com,shared social platform root
+facebook.net,shared social SDK root
+firebaseapp.com,shared application platform root
+firebaseio.com,shared application platform root
+freshdesk.com,shared helpdesk platform root; only the dedicated Wirex One tenant host is approved
+freshworks.com,shared helpdesk vendor root
+google-analytics.com,shared analytics platform root
+google.com,shared Google service root
+googleapis.com,shared Google API root
+googleusercontent.com,shared Google content root
+googletagmanager.com,shared analytics platform root
+gstatic.com,shared Google static root
+icloud.com,shared Apple cloud root
+mastercard.com,shared card-scheme root
+mzstatic.com,shared Apple static root
+paypal.com,shared payment platform root
+play.google.com,shared Google Play host
+privy.io,shared key-management and identity platform root
+s3.eu-central-1.amazonaws.com,shared object-storage host referenced by the support portal
+sentry.io,shared error-reporting platform root
+static.wixstatic.com,shared website-builder CDN host
+statuspage.io,shared status platform root
+stripe.com,shared payment platform root
+sumsub.com,shared identity and KYC platform root
+verify.sumsub.com,shared KYC verification host without a confirmed Wirex-only tenant name
+visa.com,shared card-scheme root
+walletconnect.com,shared wallet interoperability root
+wirex.com,unrelated Wisconsin Real Estate Exchange website; not a verified Wirex One service root
+wirex.app.link,brand-specific Branch deep link not confirmed as Wirex One core service traffic
+wirex.io,unconfirmed brand-similar root
+wirex.one,unconfirmed brand-similar root
+wirexapp.one,unconfirmed brand-similar root
+wirexapp.tech,Wirex BaaS sandbox root not confirmed for the Wirex One consumer app
+wirexone.com,unconfirmed brand-similar root
+wirexpaychain.com,Wirex Pay developer domain not confirmed for the Wirex One consumer app
+wixstatic.com,shared website-builder CDN root

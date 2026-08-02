@@ -102,10 +102,11 @@ class CommonRuleTestsMixin:
 
     def _make_project(self, root: Path) -> utils.AppConfig:
         config = self._test_config()
+        scope = config.outputs[0].scope
         (root / "manual.txt").write_text(
             "# type,domain,scope,source\n"
-            "HOST-SUFFIX,approved-one.example.net,main,official public source\n"
-            "HOST-SUFFIX,approved-two.example.net,main,official public source\n",
+            f"HOST-SUFFIX,approved-one.example.net,{scope},official public source\n"
+            f"HOST-SUFFIX,approved-two.example.net,{scope},official public source\n",
             encoding="utf-8",
         )
         (root / "excluded.txt").write_text(

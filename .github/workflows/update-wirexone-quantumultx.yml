@@ -1,0 +1,80 @@
+name: Update Wirex One Quantumult X rules
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "43 05 * * 4"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-wirexone-quantumultx
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7
+
+      - name: Set up Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: "3.13"
+
+      - name: Run Wirex One unit tests
+        run: python -m unittest discover -s tests -p "test_wirexone_rules.py" -v
+
+      - name: Verify root app index order
+        run: python -m unittest discover -s tests -p "test_root_readme_app_order.py" -v
+
+      - name: Update approved Wirex One rules
+        run: python scripts/update_wirexone_quantumultx.py --verbose
+
+      - name: Validate Wirex One files
+        run: python scripts/validate_wirexone_rules.py
+
+      - name: Commit and safely push real changes
+        shell: bash
+        run: |
+          unexpected="$(git diff --name-only -- rule/QuantumultX | grep -v '^rule/QuantumultX/WirexOne/' || true)"
+          if [[ -n "$unexpected" ]]; then
+            echo "Unexpected changes outside Wirex One:" >&2
+            echo "$unexpected" >&2
+            exit 1
+          fi
+
+          if git diff --quiet -- \
+            README.md \
+            rule/QuantumultX/WirexOne/WirexOne.list \
+            rule/QuantumultX/WirexOne/README.md; then
+            echo "No approved Wirex One rule changes."
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add \
+            README.md \
+            rule/QuantumultX/WirexOne/WirexOne.list \
+            rule/QuantumultX/WirexOne/README.md
+
+          if git diff --cached --quiet; then
+            echo "No generated Wirex One files to commit."
+            exit 0
+          fi
+
+          git commit -m "chore: update Wirex One QuantumultX rules"
+          branch="${{ github.event.repository.default_branch }}"
+          for attempt in 1 2 3; do
+            if git pull --rebase origin "$branch" && \
+              git push origin "HEAD:$branch"; then
+              exit 0
+            fi
+            git rebase --abort 2>/dev/null || true
+            sleep $((attempt * 5))
+          done
+          echo "Unable to safely push after three attempts." >&2
+          exit 1

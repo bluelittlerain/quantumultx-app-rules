@@ -1,0 +1,3 @@
+# 类型,域名,范围,来源说明
+HOST,wirexone.freshdesk.com,wirexone-core,Wirex official website links the dedicated Wirex One Help Center
+HOST-SUFFIX,wirexapp.com,wirexone-core,Wirex One legal pages app listings help center and status page identify the Wirex first-party root

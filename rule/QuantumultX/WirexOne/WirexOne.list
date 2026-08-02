@@ -1,0 +1,14 @@
+# NAME: WirexOne
+# DESCRIPTION: Wirex One official app and service domain rules
+# AUTHOR: bluelittlerain
+# REPO: https://github.com/bluelittlerain/quantumultx-app-rules
+# SOURCE: Wirex One official sources and reviewed public upstreams
+# UPDATED: 2026-08-02 00:24:14 UTC
+# HOST: 1
+# HOST-SUFFIX: 1
+# IP-CIDR: 0
+# IP6-CIDR: 0
+# TOTAL: 2
+
+HOST,wirexone.freshdesk.com,WirexOne
+HOST-SUFFIX,wirexapp.com,WirexOne
