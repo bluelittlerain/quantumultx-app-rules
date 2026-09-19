@@ -38,9 +38,15 @@ OFFICIAL_PAGES = (
     "https://www.clubsim.com.hk/clsweb/faq",
 )
 OFFICIAL_APK_URL = "https://www.clubsim.com.hk/api/apk/download"
-COMMUNITY_RULE_URL = (
-    "https://raw.githubusercontent.com/ClearLuv/iOS_collecton/"
-    "main/Rule/ClubSim.list"
+COMMUNITY_RULE_URLS = (
+    "https://raw.githubusercontent.com/huang1179/QuanX/"
+    "H/Rule/ClubSim.list",
+    "https://raw.githubusercontent.com/JamesLiu0802/JamesConf/"
+    "main/Clash/ClubSim.list",
+    "https://raw.githubusercontent.com/dongdongtang/myrules/"
+    "master/script/clubsim.list",
+    "https://raw.githubusercontent.com/cddchen/scripts/"
+    "main/ClubsimWifiCall.list",
 )
 EXPECTED_PACKAGE = "com.pccw.clubsim"
 
@@ -105,6 +111,7 @@ SHARED_ROOTS = frozenset(
         "nxtomo.com",
         "nxtomogames.com",
         "onelink.to",
+        "onesignal.com",
         "page.link",
         "paypal.com",
         "pccw.com",
@@ -187,6 +194,10 @@ class DiscoveryReport:
     fetched_scripts: int
     raw_occurrences: int
     apk: ApkReport | None
+    community_sources_successful: int = 0
+    community_sources_skipped: int = 0
+    community_warnings: tuple[str, ...] = ()
+    corroborated_network_domains: frozenset[str] = frozenset()
 
 
 def _clean_tsv_field(value: object) -> str:
@@ -393,11 +404,21 @@ def fetch_text(url: str) -> tuple[str, str, str]:
 
 def parse_community_rules(text: str, source: str) -> list[Candidate]:
     validate_public_text(text, source, "text/plain")
+    sample = text.lstrip().lower()[:2048]
+    html_markers = ("<!doctype html", "<html", "<head", "<body")
+    if sample.startswith(html_markers) or any(
+        marker in sample for marker in html_markers
+    ):
+        raise DiscoveryError(
+            f"Community rule source returned HTML: {sanitize_url(source)}"
+        )
     candidates: list[Candidate] = []
     for raw_line in text.splitlines():
         line = raw_line.split("#", 1)[0].strip()
         if not line:
             continue
+        if line.startswith("-"):
+            line = line[1:].strip()
         parts = [part.strip() for part in line.split(",")]
         if len(parts) < 2 or parts[0].upper() not in {
             "DOMAIN",
@@ -410,14 +431,41 @@ def parse_community_rules(text: str, source: str) -> list[Candidate]:
             classify_host(
                 parts[1],
                 source,
-                evidence="Current public ClubSim network rule.",
+                evidence=(
+                    "Public community ClubSim rule candidate; manual review required."
+                ),
             )
         )
-    if len(candidates) < 5:
-        raise DiscoveryError(
-            f"Community source has only {len(candidates)} usable rules"
-        )
+    if not candidates:
+        raise DiscoveryError("Community source contains no usable domain rules")
     return candidates
+
+
+def discover_community_candidates(
+    fetcher: Callable[[str], tuple[str, str, str]],
+    sources: Sequence[str],
+) -> tuple[list[Candidate], int, list[str], frozenset[str]]:
+    """Collect optional community evidence without making it a formal-rule gate."""
+
+    candidates: list[Candidate] = []
+    successful = 0
+    warnings: list[str] = []
+    corroborated: set[str] = set()
+    for source_url in sources:
+        try:
+            text, final_url, _ = fetcher(source_url)
+            source_candidates = parse_community_rules(text, final_url)
+        except (DiscoveryError, urllib.error.URLError, TimeoutError, OSError) as exc:
+            warnings.append(f"{sanitize_url(source_url)} — {exc}")
+            continue
+        successful += 1
+        candidates.extend(source_candidates)
+        corroborated.update(
+            candidate.domain
+            for candidate in source_candidates
+            if candidate.domain in NETWORK_DOMAINS
+        )
+    return candidates, successful, warnings, frozenset(corroborated)
 
 
 def _deduplicate(candidates: Iterable[Candidate]) -> list[Candidate]:
@@ -439,7 +487,10 @@ def discover_candidates(
     *,
     fetcher: Callable[[str], tuple[str, str, str]] = fetch_text,
     pages: Sequence[str] = OFFICIAL_PAGES,
+    community_sources: Sequence[str] = COMMUNITY_RULE_URLS,
 ) -> DiscoveryReport:
+    if not pages:
+        raise DiscoveryError("At least one official Club Sim page is required")
     candidates: list[Candidate] = []
     scripts: set[str] = set()
     raw_occurrences = 0
@@ -474,16 +525,24 @@ def discover_candidates(
                 )
             )
 
-    upstream_text, upstream_final, _ = fetcher(COMMUNITY_RULE_URL)
-    network_candidates = parse_community_rules(upstream_text, upstream_final)
-    candidates.extend(network_candidates)
-    raw_occurrences += len(network_candidates)
+    (
+        community_candidates,
+        community_successful,
+        community_warnings,
+        corroborated_network_domains,
+    ) = discover_community_candidates(fetcher, community_sources)
+    candidates.extend(community_candidates)
+    raw_occurrences += len(community_candidates)
     return DiscoveryReport(
         candidates=_deduplicate(candidates),
         fetched_pages=len(pages),
         fetched_scripts=len(scripts),
         raw_occurrences=raw_occurrences,
         apk=None,
+        community_sources_successful=community_successful,
+        community_sources_skipped=len(community_warnings),
+        community_warnings=tuple(community_warnings),
+        corroborated_network_domains=corroborated_network_domains,
     )
 
 
@@ -628,6 +687,10 @@ def merge_apk_candidates(
         fetched_scripts=report.fetched_scripts,
         raw_occurrences=report.raw_occurrences + len(apk_report.domains),
         apk=apk_report,
+        community_sources_successful=report.community_sources_successful,
+        community_sources_skipped=report.community_sources_skipped,
+        community_warnings=report.community_warnings,
+        corroborated_network_domains=report.corroborated_network_domains,
     )
 
 
@@ -672,6 +735,15 @@ def print_summary(report: DiscoveryReport, *, verbose: bool = False) -> None:
         counts[candidate.status] = counts.get(candidate.status, 0) + 1
     print(f"Official pages fetched: {report.fetched_pages}")
     print(f"Official scripts fetched: {report.fetched_scripts}")
+    print(
+        "Community sources successful: "
+        f"{report.community_sources_successful}"
+    )
+    print(f"Community sources skipped: {report.community_sources_skipped}")
+    print(
+        "Approved network domains corroborated: "
+        f"{len(report.corroborated_network_domains)}/{len(NETWORK_DOMAINS)}"
+    )
     print(f"Raw domain occurrences: {report.raw_occurrences}")
     print(f"Unique candidates: {len(report.candidates)}")
     for status in ("confirmed", "optional", "excluded", "needs-review"):
@@ -683,6 +755,18 @@ def print_summary(report: DiscoveryReport, *, verbose: bool = False) -> None:
         print(f"APK bytes: {report.apk.size}")
         print(f"APK SHA-256: {report.apk.sha256}")
         print(f"APK package verified: {'yes' if report.apk.package_verified else 'no'}")
+    if report.community_warnings:
+        print("Warnings:", file=sys.stderr)
+        for warning in report.community_warnings:
+            print(
+                f"- Community ClubSim discovery source unavailable: {warning}",
+                file=sys.stderr,
+            )
+    if not report.community_sources_successful:
+        print(
+            "Community discovery unavailable; approved rules preserved.",
+            file=sys.stderr,
+        )
     if verbose:
         for candidate in report.candidates:
             print(

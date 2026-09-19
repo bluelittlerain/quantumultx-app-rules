@@ -35,7 +35,7 @@ Raw 链接：
 
 ## 可选 Network 规则
 
-`ClubSim-Network.list` 将现有公开 ClubSim 网络规则中的 5 个精确主机与 App 业务规则分开：
+`ClubSim-Network.list` 将本地人工审核数据中的 5 个精确主机与 App 业务规则分开：
 
 - `csl.prod.ondemandconnectivity.com`
 - `hhk.prod.ondemandconnectivity.com`
@@ -53,8 +53,11 @@ Raw 链接：
 2. 官方页面直接加载的 JavaScript、静态资源、同源 API 路径和 App 链接。
 3. [iOS App Store](https://apps.apple.com/hk/app/id1286595675)与 [Google Play](https://play.google.com/store/apps/details?id=com.pccw.clubsim)公开资料。
 4. 官方网站公开的 APK 下载入口；APK 只允许静态检查，不执行、不登录、不绕过代码保护。
-5. [ClearLuv 当前 ClubSim 网络规则](https://raw.githubusercontent.com/ClearLuv/iOS_collecton/main/Rule/ClubSim.list)，只作为 Network 候选来源。
-6. DNS、TLS 和证书资料只能作为辅助证据，不能单独证明归属。
+5. 当前可审查的社区候选来源：[huang1179/QuanX](https://github.com/huang1179/QuanX/blob/H/Rule/ClubSim.list)、[JamesLiu0802/JamesConf](https://github.com/JamesLiu0802/JamesConf/blob/main/Clash/ClubSim.list)、[dongdongtang/myrules](https://github.com/dongdongtang/myrules/blob/master/script/clubsim.list) 和 [cddchen/scripts](https://github.com/cddchen/scripts/blob/main/ClubsimWifiCall.list)。这些文件当前均包含 5 个已批准 Network 主机，但仅用于交叉佐证和发现候选；其中的 Apple、Google、T-Mobile、共享 IP、进程规则及其他宽泛条目不会被整表导入。
+6. 历史来源 `ClearLuv/iOS_collecton` 曾包含这 5 个 Network 主机，但目前仓库及 Raw 文件均不可用；它只作为历史证据，不是运行时依赖。
+7. DNS、TLS 和证书资料只能作为辅助证据，不能单独证明归属。
+
+[Club Sim 条款](https://clubsim.com.hk/en/tnc)说明服务由 CSL Mobile Limited 提供，[ITU MCC/MNC 公报](https://www.itu.int/dms_pub/itu-t/opb/sp/T-SP-OB.1280-2023-OAS-PDF-E.pdf)将 `454 00` 列为 Hong Kong Telecommunications (HKT) Limited；这些资料支持 ePDG 主机的运营商网络属性。[Thales 资料](https://www.thalesgroup.com/sites/default/files/2025-04/MCS-Enterprise-Automotive-connectivity.pdf)表明 On-Demand Connectivity 是可供多个运营商使用的 eSIM 平台，因此只保留已审核的两个精确主机，不收录其共享根域。目前没有找到 Club Sim 官方页面直接公布这 5 个技术主机，因此文档只称其为多社区来源交叉佐证后的人工批准项，不声称官方直接确认。
 
 域名发现结果保存在 [clubsim_candidates.tsv](../../../data/clubsim_candidates.tsv)。发现脚本会移除 URL 的 query 和 fragment，并把共享平台或证据不足的域名标记为 excluded 或 needs-review；候选数据不会自动进入正式规则。
 
@@ -150,7 +153,7 @@ python3 scripts/validate_clubsim_rules.py
 python3 scripts/validate_bybit_rules.py
 ```
 
-更新脚本只读取已批准的 manual/network 数据，并以当前公开 Network 上游进行安全核对。空响应、HTML 错误页、网络异常或异常数量下降都会失败且不会清空现有规则；规则正文不变时保留 `UPDATED` 时间。
+更新脚本只从 [clubsim_manual_domains.txt](../../../data/clubsim_manual_domains.txt) 和 [clubsim_network_domains.txt](../../../data/clubsim_network_domains.txt) 读取已批准数据生成正式规则。社区文件只在 discovery 阶段作为可选佐证：单个或全部社区来源出现 404、5xx、空响应、HTML 错误页或 timeout 时会记录 warning，不会删除已批准规则。官方公开页检查失败、已批准数据为空或非法、数量异常下降、候选泄漏到正式规则或共享根域名进入正式文件仍会使验证失败。规则正文不变时保留 `UPDATED` 时间。
 
 [GitHub Actions 工作流](../../../.github/workflows/update-clubsim-quantumultx.yml)每周使用 UTC 定时，也支持手动运行。它依次运行完整单元测试、发现检查、规则生成、ClubSim 验证和现有 Bybit 验证，只在生成文件真实变化时提交 `chore: update ClubSim QuantumultX rules`。
 

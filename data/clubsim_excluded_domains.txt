@@ -24,6 +24,7 @@ hkt.com,shared HKT group services; only a proven dedicated exact host could be c
 icloud.com,shared Apple cloud services
 mastercard.com,shared payment network
 mzstatic.com,shared Apple static resources
+onesignal.com,shared push notification platform
 paypal.com,shared payment platform
 pccw.com,shared PCCW group services; only a proven dedicated exact host could be considered
 sentry.io,shared crash-reporting platform

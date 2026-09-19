@@ -13,10 +13,8 @@ import os
 import re
 import sys
 import tempfile
-import urllib.error
-import urllib.request
 from pathlib import Path
-from typing import Callable, Iterable, Sequence
+from typing import Iterable, Sequence
 
 import repository_identity
 
@@ -24,12 +22,6 @@ import repository_identity
 ROOT = Path(__file__).resolve().parents[1]
 AUTHOR = repository_identity.OWNER
 REPOSITORY_URL = repository_identity.REPOSITORY_URL
-USER_AGENT = repository_identity.user_agent("clubsim-updater")
-NETWORK_TIMEOUT_SECONDS = 25
-UPSTREAM_URL = (
-    "https://raw.githubusercontent.com/ClearLuv/iOS_collecton/"
-    "main/Rule/ClubSim.list"
-)
 
 TYPE_ORDER = {
     "HOST": 0,
@@ -73,6 +65,7 @@ FORBIDDEN_SHARED_ROOTS = frozenset(
         "icloud.com",
         "mastercard.com",
         "mzstatic.com",
+        "onesignal.com",
         "paypal.com",
         "pccw.com",
         "sentry.io",
@@ -103,10 +96,6 @@ UPDATED_RE = re.compile(r"^# UPDATED:\s*(.*?)\s*$", re.MULTILINE)
 
 class UpdateError(RuntimeError):
     """Base class for safe update failures."""
-
-
-class UpstreamError(UpdateError):
-    """A public upstream was unavailable or malformed."""
 
 
 class SafetyError(UpdateError):
@@ -155,8 +144,6 @@ class RuleFileUpdate:
 
 @dataclasses.dataclass
 class ProjectUpdate:
-    upstream_count: int
-    verified_upstream_count: int
     approved_count: int
     excluded_count: int
     monthly_candidate_count: int
@@ -243,64 +230,6 @@ def validate_rule_allowed(rule: Rule) -> None:
             "Shared-service suffix cannot be routed as ClubSim: "
             f"{rule.qx_line()}"
         )
-
-
-def validate_upstream_text(text: str) -> None:
-    if not text or not text.strip():
-        raise UpstreamError("Upstream response was empty")
-    sample = text.lstrip().lower()
-    html_markers = ("<!doctype html", "<html", "<head", "<body")
-    if sample.startswith(html_markers) or any(
-        marker in sample[:2048] for marker in html_markers
-    ):
-        raise UpstreamError("Upstream returned HTML instead of a rule file")
-
-
-def parse_upstream(text: str) -> list[Rule]:
-    validate_upstream_text(text)
-    rules: list[Rule] = []
-    for line_number, raw_line in enumerate(text.splitlines(), start=1):
-        line = raw_line.split("#", 1)[0].strip()
-        if not line:
-            continue
-        if line.startswith("-"):
-            line = line[1:].strip()
-        parts = [part.strip() for part in line.split(",")]
-        if len(parts) < 2:
-            continue
-        try:
-            rules.append(make_rule(parts[0], parts[1]))
-        except SafetyError as exc:
-            raise UpstreamError(
-                f"Invalid upstream rule at line {line_number}: {exc}"
-            ) from exc
-    if not rules:
-        raise UpstreamError("Upstream contained no usable rules")
-    return deduplicate_rules(rules)
-
-
-def fetch_url(url: str) -> str:
-    request = urllib.request.Request(
-        url,
-        headers={
-            "User-Agent": USER_AGENT,
-            "Accept": "text/plain, */*;q=0.1",
-        },
-    )
-    try:
-        with urllib.request.urlopen(
-            request, timeout=NETWORK_TIMEOUT_SECONDS
-        ) as response:
-            data = response.read()
-            content_type = response.headers.get_content_type()
-    except (urllib.error.URLError, TimeoutError, OSError) as exc:
-        raise UpstreamError(f"Unable to download public upstream: {exc}") from exc
-    if content_type == "text/html":
-        raise UpstreamError("Upstream returned an HTML content type")
-    try:
-        return data.decode("utf-8")
-    except UnicodeDecodeError as exc:
-        raise UpstreamError("Upstream was not UTF-8") from exc
 
 
 def parse_approved_data(text: str, expected_scope: str) -> list[Rule]:
@@ -561,7 +490,6 @@ def update_readme_text(
 def build_update(
     *,
     paths: ProjectPaths | None = None,
-    fetcher: Callable[[str], str] = fetch_url,
     now: dt.datetime | None = None,
 ) -> ProjectUpdate:
     paths = paths or default_paths()
@@ -576,22 +504,6 @@ def build_update(
     exclusions = parse_exclusions(excluded_text)
     app_rules = apply_exclusions(app_rules, exclusions)
     approved_network_rules = apply_exclusions(approved_network_rules, exclusions)
-
-    upstream_rules = parse_upstream(fetcher(UPSTREAM_URL))
-    if len(upstream_rules) < 5:
-        raise UpstreamError(
-            f"Public upstream contains only {len(upstream_rules)} rules; expected at least 5"
-        )
-    upstream_values = {rule.value for rule in upstream_rules}
-    verified_count = sum(
-        rule.value in upstream_values for rule in approved_network_rules
-    )
-    required_verified = max(3, math.ceil(len(approved_network_rules) * 0.60))
-    if verified_count < required_verified:
-        raise UpstreamError(
-            f"Only {verified_count} approved network rules remain in the public "
-            f"upstream; safety floor is {required_verified}"
-        )
 
     app_rules = collapse_parent_coverage(app_rules)
     network_rules = collapse_parent_coverage(approved_network_rules)
@@ -630,7 +542,7 @@ def build_update(
     network_content, network_body_changed, network_updated = render_rule_file(
         name="ClubSim Network",
         description="Club Sim optional eSIM, ePDG and network-service rules",
-        source="ClearLuv/iOS_collecton ClubSim public rule",
+        source="Reviewed ClubSim public network sources",
         rules=network_rules,
         old_content=old_network_content,
         now=now,
@@ -673,8 +585,6 @@ def build_update(
             readme_changes[readme] = new_text
 
     return ProjectUpdate(
-        upstream_count=len(upstream_rules),
-        verified_upstream_count=verified_count,
         approved_count=len(app_rules) + len(approved_network_rules),
         excluded_count=len(exclusions),
         monthly_candidate_count=count_monthly_candidates(paths.candidates),
@@ -740,8 +650,7 @@ def print_diff(update: ProjectUpdate) -> None:
 
 
 def print_summary(update: ProjectUpdate, *, verbose: bool = False) -> None:
-    print(f"Upstream rules: {update.upstream_count}")
-    print(f"Verified upstream rules: {update.verified_upstream_count}")
+    print("Formal source: local reviewed approved data")
     print(f"Approved domains: {update.approved_count}")
     print(f"App rules: {len(update.main.new_rules)}")
     print(f"Network rules: {len(update.network.new_rules)}")
@@ -754,6 +663,10 @@ def print_summary(update: ProjectUpdate, *, verbose: bool = False) -> None:
         f"{len(update.main.new_rules) + len(update.network.new_rules)}"
     )
     print(f"Changed: {'yes' if update.changed else 'no'}")
+    print(
+        "Formal rules preserved: "
+        f"{'yes' if update.removed_count == 0 else 'no'}"
+    )
     if verbose:
         for label, result in (("main", update.main), ("network", update.network)):
             print(f"{label} updated: {result.updated_at}")

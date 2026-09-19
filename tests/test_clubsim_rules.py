@@ -26,6 +26,19 @@ DOMAIN,ss.epdg.epc.mnc000.mcc454.pub.3gppnetwork.org
 DOMAIN,ss.epdg.epc.geo.mnc000.mcc454.pub.3gppnetwork.org
 """
 
+OFFICIAL_URL = "https://www.clubsim.com.hk/"
+HISTORICAL_CLEARLUV_URL = (
+    "https://raw.githubusercontent.com/ClearLuv/iOS_collecton/"
+    "main/Rule/ClubSim.list"
+)
+COMMUNITY_URL_A = "https://raw.githubusercontent.com/example/a/main/ClubSim.list"
+COMMUNITY_URL_B = "https://raw.githubusercontent.com/example/b/main/ClubSim.list"
+OFFICIAL_HTML = """\
+<!doctype html>
+<a href="https://www.clubsim.com.hk/en/login">Login</a>
+<a href="https://clubsim.page.link/open">App</a>
+"""
+
 MANUAL_TEXT = """\
 # 类型,域名,范围,来源说明
 HOST,clubsim.page.link,prepaid-app,official app-link script
@@ -50,6 +63,21 @@ google.com,shared identity platform
 CANDIDATE_HEADER = (
     "domain\trule_type\tscope\tstatus\tsource\tevidence\trisk\tnotes\n"
 )
+
+
+def make_discovery_fetcher(
+    responses: dict[str, str | BaseException],
+):
+    def fetch(url: str) -> tuple[str, str, str]:
+        if url not in responses:
+            raise AssertionError(f"unexpected URL: {url}")
+        result = responses[url]
+        if isinstance(result, BaseException):
+            raise result
+        content_type = "text/html" if url == OFFICIAL_URL else "text/plain"
+        return result, url, content_type
+
+    return fetch
 
 
 class TempProject:
@@ -96,7 +124,7 @@ class TempProject:
         network, _, _ = updater.render_rule_file(
             name="ClubSim Network",
             description="Club Sim optional eSIM, ePDG and network-service rules",
-            source="ClearLuv/iOS_collecton ClubSim public rule",
+            source="Reviewed ClubSim public network sources",
             rules=network_rules,
             old_content="",
             now=timestamp,
@@ -169,7 +197,6 @@ class SafeUpdateTests(unittest.TestCase):
     def _build(self, project: TempProject) -> updater.ProjectUpdate:
         return updater.build_update(
             paths=project.paths,
-            fetcher=lambda _: UPSTREAM_TEXT,
             now=dt.datetime(2026, 2, 2, tzinfo=dt.timezone.utc),
         )
 
@@ -213,49 +240,26 @@ class SafeUpdateTests(unittest.TestCase):
                 {rule.value for rule in update.main.new_rules},
             )
 
-    def test_empty_upstream_does_not_overwrite_existing_files(self) -> None:
-        with tempfile.TemporaryDirectory() as directory:
-            project = TempProject(Path(directory))
-            project.write_existing()
-            before = project.paths.main_rule.read_bytes()
-            with self.assertRaises(updater.UpstreamError):
-                updater.build_update(
-                    paths=project.paths, fetcher=lambda _: ""
-                )
-            self.assertEqual(project.paths.main_rule.read_bytes(), before)
-
-    def test_html_upstream_does_not_overwrite_existing_files(self) -> None:
+    def test_empty_approved_data_does_not_overwrite_existing_files(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             project = TempProject(Path(directory))
             project.write_existing()
             before = project.paths.network_rule.read_bytes()
-            with self.assertRaises(updater.UpstreamError):
-                updater.build_update(
-                    paths=project.paths,
-                    fetcher=lambda _: "<!doctype html><html>Error</html>",
-                )
+            project.paths.network_data.write_text("# empty\n", encoding="utf-8")
+            with self.assertRaises(updater.SafetyError):
+                updater.build_update(paths=project.paths)
             self.assertEqual(project.paths.network_rule.read_bytes(), before)
 
-    def test_network_failure_does_not_overwrite_existing_files(self) -> None:
-        def fail(_: str) -> str:
-            raise updater.UpstreamError("simulated public network failure")
-
+    def test_approved_network_count_decline_is_rejected(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             project = TempProject(Path(directory))
             project.write_existing()
-            before = project.paths.main_rule.read_bytes()
-            with self.assertRaises(updater.UpstreamError):
-                updater.build_update(paths=project.paths, fetcher=fail)
-            self.assertEqual(project.paths.main_rule.read_bytes(), before)
-
-    def test_abnormal_upstream_decline_is_rejected(self) -> None:
-        with tempfile.TemporaryDirectory() as directory:
-            project = TempProject(Path(directory))
-            with self.assertRaises(updater.UpstreamError):
-                updater.build_update(
-                    paths=project.paths,
-                    fetcher=lambda _: "DOMAIN,csl.prod.ondemandconnectivity.com\n",
-                )
+            before = project.paths.network_rule.read_bytes()
+            reduced = "\n".join(NETWORK_TEXT.splitlines()[:-1]) + "\n"
+            project.paths.network_data.write_text(reduced, encoding="utf-8")
+            with self.assertRaises(updater.SafetyError):
+                updater.build_update(paths=project.paths)
+            self.assertEqual(project.paths.network_rule.read_bytes(), before)
 
     def test_unchanged_body_preserves_timestamp(self) -> None:
         rules = updater.parse_approved_data(MANUAL_TEXT, "prepaid-app")
@@ -279,7 +283,7 @@ class SafeUpdateTests(unittest.TestCase):
         self.assertEqual(new_time, old_time)
         self.assertEqual(new, old)
 
-    def test_manual_rule_survives_upstream_update(self) -> None:
+    def test_manual_rule_survives_generation(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             project = TempProject(Path(directory))
             update = self._build(project)
@@ -316,6 +320,178 @@ class SafeUpdateTests(unittest.TestCase):
 
 
 class DiscoveryTests(unittest.TestCase):
+    def _discover(
+        self,
+        community_responses: dict[str, str | BaseException],
+        community_sources: tuple[str, ...],
+    ) -> discover.DiscoveryReport:
+        responses: dict[str, str | BaseException] = {
+            OFFICIAL_URL: OFFICIAL_HTML,
+            **community_responses,
+        }
+        return discover.discover_candidates(
+            fetcher=make_discovery_fetcher(responses),
+            pages=(OFFICIAL_URL,),
+            community_sources=community_sources,
+        )
+
+    def test_historical_clearluv_404_is_optional(self) -> None:
+        report = self._discover(
+            {
+                HISTORICAL_CLEARLUV_URL: discover.DiscoveryError(
+                    "HTTP Error 404: Not Found"
+                )
+            },
+            (HISTORICAL_CLEARLUV_URL,),
+        )
+        self.assertEqual(report.community_sources_successful, 0)
+        self.assertEqual(report.community_sources_skipped, 1)
+        self.assertTrue(
+            any("404" in warning for warning in report.community_warnings)
+        )
+        self.assertIn(
+            "clubsim.com.hk", {candidate.domain for candidate in report.candidates}
+        )
+
+    def test_historical_clearluv_is_not_an_active_source(self) -> None:
+        self.assertNotIn(
+            HISTORICAL_CLEARLUV_URL,
+            discover.COMMUNITY_RULE_URLS,
+        )
+        self.assertGreaterEqual(len(discover.COMMUNITY_RULE_URLS), 2)
+
+    def test_one_community_404_and_one_success_continues(self) -> None:
+        report = self._discover(
+            {
+                COMMUNITY_URL_A: discover.DiscoveryError(
+                    "HTTP Error 404: Not Found"
+                ),
+                COMMUNITY_URL_B: UPSTREAM_TEXT,
+            },
+            (COMMUNITY_URL_A, COMMUNITY_URL_B),
+        )
+        self.assertEqual(report.community_sources_successful, 1)
+        self.assertEqual(report.community_sources_skipped, 1)
+        self.assertEqual(
+            report.corroborated_network_domains,
+            discover.NETWORK_DOMAINS,
+        )
+
+    def test_all_community_sources_unavailable_preserves_approved_rules(self) -> None:
+        report = self._discover(
+            {
+                COMMUNITY_URL_A: discover.DiscoveryError("network unavailable"),
+                COMMUNITY_URL_B: discover.DiscoveryError("HTTP Error 503"),
+            },
+            (COMMUNITY_URL_A, COMMUNITY_URL_B),
+        )
+        self.assertEqual(report.community_sources_successful, 0)
+        with tempfile.TemporaryDirectory() as directory:
+            project = TempProject(Path(directory))
+            project.write_existing()
+            before = project.paths.network_rule.read_bytes()
+            update = updater.build_update(paths=project.paths)
+            self.assertEqual(
+                {rule.value for rule in update.network.new_rules},
+                set(updater.NETWORK_DOMAINS),
+            )
+            self.assertEqual(project.paths.network_rule.read_bytes(), before)
+
+    def test_community_new_domain_is_candidate_only(self) -> None:
+        report = self._discover(
+            {COMMUNITY_URL_A: UPSTREAM_TEXT + "DOMAIN,new.clubsim.example\n"},
+            (COMMUNITY_URL_A,),
+        )
+        candidate = next(
+            item for item in report.candidates if item.domain == "new.clubsim.example"
+        )
+        self.assertEqual(candidate.status, "needs-review")
+        with tempfile.TemporaryDirectory() as directory:
+            project = TempProject(Path(directory))
+            update = updater.build_update(paths=project.paths)
+            formal = {
+                rule.value
+                for rule in update.main.new_rules + update.network.new_rules
+            }
+            self.assertNotIn("new.clubsim.example", formal)
+
+    def test_community_missing_approved_rule_does_not_delete_it(self) -> None:
+        reduced = "\n".join(UPSTREAM_TEXT.splitlines()[:-1]) + "\n"
+        report = self._discover(
+            {COMMUNITY_URL_A: reduced},
+            (COMMUNITY_URL_A,),
+        )
+        self.assertEqual(len(report.corroborated_network_domains), 4)
+        with tempfile.TemporaryDirectory() as directory:
+            project = TempProject(Path(directory))
+            update = updater.build_update(paths=project.paths)
+            self.assertEqual(
+                {rule.value for rule in update.network.new_rules},
+                set(updater.NETWORK_DOMAINS),
+            )
+
+    def test_community_shared_domain_is_excluded_and_never_formal(self) -> None:
+        report = self._discover(
+            {COMMUNITY_URL_A: UPSTREAM_TEXT + "DOMAIN-SUFFIX,gstatic.com\n"},
+            (COMMUNITY_URL_A,),
+        )
+        shared = next(
+            item for item in report.candidates if item.domain == "gstatic.com"
+        )
+        self.assertEqual(shared.status, "excluded")
+        with tempfile.TemporaryDirectory() as directory:
+            project = TempProject(Path(directory))
+            update = updater.build_update(paths=project.paths)
+            self.assertNotIn(
+                "gstatic.com",
+                {
+                    rule.value
+                    for rule in update.main.new_rules + update.network.new_rules
+                },
+            )
+
+    def test_community_html_error_is_skipped(self) -> None:
+        report = self._discover(
+            {
+                COMMUNITY_URL_A: (
+                    "temporary gateway response\n"
+                    "<!doctype html><html>Error</html>"
+                )
+            },
+            (COMMUNITY_URL_A,),
+        )
+        self.assertEqual(report.community_sources_successful, 0)
+        self.assertEqual(report.community_sources_skipped, 1)
+        self.assertTrue(
+            any("returned HTML" in warning for warning in report.community_warnings)
+        )
+
+    def test_empty_community_response_is_skipped(self) -> None:
+        report = self._discover(
+            {COMMUNITY_URL_A: ""},
+            (COMMUNITY_URL_A,),
+        )
+        self.assertEqual(report.community_sources_successful, 0)
+        self.assertEqual(report.community_sources_skipped, 1)
+
+    def test_community_timeout_is_skipped(self) -> None:
+        report = self._discover(
+            {COMMUNITY_URL_A: TimeoutError("timed out")},
+            (COMMUNITY_URL_A,),
+        )
+        self.assertEqual(report.community_sources_successful, 0)
+        self.assertTrue(
+            any("timed out" in warning for warning in report.community_warnings)
+        )
+
+    def test_no_official_pages_is_a_hard_failure(self) -> None:
+        with self.assertRaises(discover.DiscoveryError):
+            discover.discover_candidates(
+                fetcher=make_discovery_fetcher({}),
+                pages=(),
+                community_sources=(),
+            )
+
     def test_url_query_and_fragment_are_removed(self) -> None:
         private_parameter = "tok" + "en=redacted"
         clean = discover.sanitize_url(
