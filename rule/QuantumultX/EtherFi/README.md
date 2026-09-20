@@ -16,15 +16,23 @@ Quantumult X 常规分流根据请求域名和 IP 地址匹配，不会真正识
 
 ## 数据来源
 
-1. [Ether.fi 官方网站](https://www.ether.fi/)
-2. [Ether.fi Help Center](https://help.ether.fi/en/)
-3. [Ether.fi 技术文档](https://etherfi.gitbook.io/etherfi)
+1. [Ether.fi 官方网站](https://www.ether.fi/)（核心发现来源）
+2. [Ether.fi Help Center](https://help.ether.fi/en/)（核心发现来源）
+3. [Ether.fi 技术文档](https://etherfi.gitbook.io/etherfi)（可选发现来源，不进入正式规则）
 4. [Ether.fi App Store 页面](https://apps.apple.com/us/app/ether-fi-crypto-card-spend/id6670338367)
 5. [Ether.fi Google Play 页面](https://play.google.com/store/apps/details?id=etherfi.app)
 6. [Ether.fi 官方 GitHub](https://github.com/etherfi-protocol)
 7. 官方网站及 Web App 公开静态代码中的主机引用
 
 截至当前调研时间，v2fly/domain-list-community、MetaCubeX/meta-rules-dat 和 blackmatrix7/ios_rule_script 均没有可直接使用的 Ether.fi 专用规则文件。因此更新器以公开官方页面的实时可用性和身份标记作为上游安全检查，正式输出仍只来自人工批准文件。
+
+## 自动更新来源与容错
+
+定时更新只请求官网首页、Help Center 和可选 GitBook 文档入口，不再重复请求同一官网下的 Stake、Liquid、Cash 营销页面。多个官方页面可以共同确认同一个 `HOST-SUFFIX,ether.fi`；来源成功门槛与最终正式规则数量分开计算，不会为凑数量生成父域已覆盖的精确 HOST。
+
+单个来源遇到 HTTP 403、408、429、5xx、超时、临时 DNS/TLS 错误或不完整响应时，更新器最多尝试 3 次，然后记录 warning 并跳过。`Retry-After` 最多等待 10 秒，超过上限会直接跳过该来源。继续生成前至少需要 2 个官方来源成功、其中至少 1 个为核心来源，并且去重后至少保留 1 条有效 observation。
+
+所有核心来源失败、成功来源不足、observation 不足、人工批准数据缺失或正式输出异常减少时，更新会失败且不会写入文件。现有 `EtherFi.list` 及其 `UPDATED` 时间会保持不变。
 
 ## 分类结果
 
