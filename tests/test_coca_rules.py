@@ -169,7 +169,7 @@ class COCAScopeTests(unittest.TestCase):
 
     def test_updater_uses_current_public_official_sources(self) -> None:
         self.assertEqual(len(updater.CORE_SOURCE_URLS), 3)
-        self.assertEqual(len(updater.OPTIONAL_SOURCE_URLS), 1)
+        self.assertEqual(len(updater.OPTIONAL_SOURCE_URLS), 0)
         self.assertEqual(
             updater.CONFIG.upstream_urls,
             updater.CORE_SOURCE_URLS + updater.OPTIONAL_SOURCE_URLS,
@@ -260,16 +260,54 @@ class COCAScopeTests(unittest.TestCase):
         self.assertIn("coca.xyz", result)
 
     def test_official_fetch_rejects_external_redirect(self) -> None:
-        response = FakeHtmlResponse(
-            official_page(), url="https://shared.example.net/error"
-        )
-        with mock.patch.object(
-            updater.urllib.request, "urlopen", return_value=response
+        for final_url in (
+            "https://shared.example.net/error",
+            "https://cocaxyz.statuspage.io/inactive",
         ):
-            with self.assertRaises(utils.UpstreamError):
-                updater.fetch_official_observations(
-                    "https://www.coca.xyz/", "test-agent", 10
+            with self.subTest(final_url=final_url):
+                response = FakeHtmlResponse(official_page(), url=final_url)
+                with mock.patch.object(
+                    updater.urllib.request, "urlopen", return_value=response
+                ):
+                    with self.assertRaisesRegex(
+                        utils.UpstreamError, "redirected outside the allowlist"
+                    ):
+                        updater.fetch_official_observations(
+                            "https://status.coca.xyz/", "test-agent", 10
+                        )
+
+    def test_inactive_status_source_is_not_requested(self) -> None:
+        def urlopen(request, timeout):
+            self.assertEqual(timeout, updater.SOURCE_TIMEOUT_SECONDS)
+            self.assertNotIn(
+                request.full_url,
+                (
+                    "https://status.coca.xyz/",
+                    "https://cocaxyz.statuspage.io/",
+                    "https://cocaxyz.statuspage.io/inactive",
+                ),
+            )
+            return FakeHtmlResponse(official_page(), url=request.full_url)
+
+        with mock.patch.object(
+            updater.urllib.request, "urlopen", side_effect=urlopen
+        ) as opener:
+            plan, sources = updater.prepare_resilient_update()
+        self.assertEqual(opener.call_count, 3)
+        self.assertEqual(sources.core_successful, 3)
+        self.assertEqual(sources.skipped, 0)
+        self.assertFalse(plan.changed)
+        self.assertEqual(
+            [
+                rule
+                for item in plan.files
+                if item.final_count
+                for rule in utils.parse_rule_body(
+                    item.new_content, updater.CONFIG.policy
                 )
+            ],
+            [entry.rule for entry in self.entries],
+        )
 
     def _assert_single_source_failure_is_degraded(
         self, exception_factory, reason: str
@@ -291,7 +329,7 @@ class COCAScopeTests(unittest.TestCase):
             mock.patch.object(updater.time, "sleep") as sleep,
         ):
             plan, sources = updater.prepare_resilient_update()
-        self.assertEqual(len(sources.successful), 3)
+        self.assertEqual(len(sources.successful), 2)
         self.assertEqual(sources.core_successful, 2)
         self.assertEqual(sources.skipped, 1)
         self.assertIn(reason, sources.warnings[0].reason)
@@ -373,10 +411,7 @@ class COCAScopeTests(unittest.TestCase):
         self.assertEqual(path.read_bytes(), before)
 
     def test_too_few_core_sources_blocks_update(self) -> None:
-        successful = {
-            updater.CORE_SOURCE_URLS[0],
-            updater.OPTIONAL_SOURCE_URLS[0],
-        }
+        successful = {updater.CORE_SOURCE_URLS[0]}
         failures = {
             source.url: utils.UpstreamError("unavailable")
             for source in updater.DISCOVERY_SOURCES

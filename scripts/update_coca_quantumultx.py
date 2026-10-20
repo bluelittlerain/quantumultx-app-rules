@@ -27,7 +27,9 @@ CORE_SOURCE_URLS = (
     "https://docs.coca.xyz/",
     "https://help.coca.xyz/",
 )
-OPTIONAL_SOURCE_URLS = ("https://status.coca.xyz/",)
+# Verified 2026-10-20: status.coca.xyz redirects to
+# https://cocaxyz.statuspage.io/inactive (Page Inactive), not public status data.
+OPTIONAL_SOURCE_URLS: tuple[str, ...] = ()
 DISCOVERY_SOURCES = tuple(
     resilient.DiscoverySource(url, "core") for url in CORE_SOURCE_URLS
 ) + tuple(

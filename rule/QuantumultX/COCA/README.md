@@ -25,7 +25,7 @@ COCA 的 Android 包名保留了 `wirex` 字样，官方资料也说明卡片服
 
 ## 主规则覆盖范围
 
-- `HOST-SUFFIX,coca.xyz,COCA`：COCA 第一方根域，覆盖官网、文档、帮助中心、状态页以及同根下经官方维护的服务。
+- `HOST-SUFFIX,coca.xyz,COCA`：COCA 第一方根域，覆盖官网、文档、帮助中心以及同根下经官方维护的服务。
 - `HOST,wwallet.app.link,COCA`：与 `com.wirex.wallet` 公开关联文件绑定的精确 Branch 深链租户；只收录精确主机，不收录共享的 `app.link` 根域。
 
 `www.coca.xyz`、`docs.coca.xyz`、`help.coca.xyz`、`status.coca.xyz` 等已被父域覆盖，因此不重复输出。官方公开资料目前没有给出可安全确认的独立 API 或 WebSocket 根域；规则不会依据名称猜测 `api`、`auth` 或 `ws` 主机。
@@ -38,7 +38,7 @@ COCA 的 Android 包名保留了 `wirex` 字样，官方资料也说明卡片服
 
 - [COCA 官方网站](https://www.coca.xyz/)、[条款](https://www.coca.xyz/terms)、[隐私说明](https://www.coca.xyz/privacy)、[卡片页面](https://www.coca.xyz/cards)与[博客](https://www.coca.xyz/blog)
 - [COCA 文档](https://docs.coca.xyz/)与[帮助中心](https://help.coca.xyz/)
-- [COCA 状态页](https://status.coca.xyz/)及其公开服务状态
+- [历史 COCA 状态页](https://status.coca.xyz/)：2026-10-20 核实其跳转至 `https://cocaxyz.statuspage.io/inactive`，显示 “Coca Wallet Status - Page Inactive”，已移出定时发现来源
 - [Apple App Store](https://apps.apple.com/us/app/coca-crypto-card-wallet/id1594165139)与[Google Play](https://play.google.com/store/apps/details?id=com.wirex.wallet)
 - `coca.xyz` 的 [Apple App 关联文件](https://www.coca.xyz/.well-known/apple-app-site-association)与 [Android Asset Links](https://www.coca.xyz/.well-known/assetlinks.json)
 - `wwallet.app.link` 的 [Apple App 关联文件](https://wwallet.app.link/apple-app-site-association)与 [Android Asset Links](https://wwallet.app.link/.well-known/assetlinks.json)
@@ -100,7 +100,9 @@ python3 scripts/validate_coca_rules.py
 
 ## 更新与提交新域名
 
-[update_coca_quantumultx.py](../../../scripts/update_coca_quantumultx.py) 读取公开官方页面作为健康观测，正式正文只由人工批准数据生成；网络失败、空结果、HTML 错误、低于安全下限或异常数量下降都会中止写入。写入采用原子替换，正文不变时保留原更新时间。`wwallet.app.link` 是人工批准的精确租户，维护时应定期复核其 Apple 与 Android 公开关联文件，再决定保留、变更或移除。
+[update_coca_quantumultx.py](../../../scripts/update_coca_quantumultx.py) 读取官网、文档、帮助中心三个核心来源作为健康观测。原可选状态源先跳转至 `cocaxyz.statuspage.io`，再跳转至 `/inactive`；该页面仅允许团队成员查看，不能提供公开状态证据，因此当前不配置可选来源。外部跳转白名单没有扩大，`statuspage.io` 及其租户未加入正式规则；`coca.xyz` 父域规则也不会覆盖外部跳转终点。
+
+单个来源的临时网络错误在有限重试后记录 warning 并跳过，异常 HTML 同样被拒绝。继续更新仍须至少 2 个来源成功、至少 2 个核心来源成功，并获得至少 2 条去重 observation；低于门槛、人工批准数据缺失或正式数量异常下降都会中止写入。正式正文只由人工批准数据生成，写入采用原子替换，正文不变时保留原更新时间。`wwallet.app.link` 是人工批准的精确租户，维护时应定期复核其 Apple 与 Android 公开关联文件，再决定保留、变更或移除。
 
 [GitHub Actions 工作流](../../../.github/workflows/update-coca-quantumultx.yml) 每周运行测试、更新和验证，仅在批准数据导致真实文件变化时提交。提交新域名时应提供不含私人参数的公开 URL、功能范围、归属证据、误匹配评估，以及为何不能由现有父域覆盖。
 
