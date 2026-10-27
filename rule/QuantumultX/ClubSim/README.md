@@ -53,8 +53,8 @@ Raw 链接：
 2. 官方页面直接加载的 JavaScript、静态资源、同源 API 路径和 App 链接。
 3. [iOS App Store](https://apps.apple.com/hk/app/id1286595675)与 [Google Play](https://play.google.com/store/apps/details?id=com.pccw.clubsim)公开资料。
 4. 官方网站公开的 APK 下载入口；APK 只允许静态检查，不执行、不登录、不绕过代码保护。
-5. 当前可审查的社区候选来源：[huang1179/QuanX](https://github.com/huang1179/QuanX/blob/H/Rule/ClubSim.list)、[JamesLiu0802/JamesConf](https://github.com/JamesLiu0802/JamesConf/blob/main/Clash/ClubSim.list)、[dongdongtang/myrules](https://github.com/dongdongtang/myrules/blob/master/script/clubsim.list) 和 [cddchen/scripts](https://github.com/cddchen/scripts/blob/main/ClubsimWifiCall.list)。这些文件当前均包含 5 个已批准 Network 主机，但仅用于交叉佐证和发现候选；其中的 Apple、Google、T-Mobile、共享 IP、进程规则及其他宽泛条目不会被整表导入。
-6. 历史来源 `ClearLuv/iOS_collecton` 曾包含这 5 个 Network 主机，但目前仓库及 Raw 文件均不可用；它只作为历史证据，不是运行时依赖。
+5. 当前可审查的社区候选来源：[huang1179/QuanX](https://github.com/huang1179/QuanX/blob/H/Rule/ClubSim.list)、[JamesLiu0802/JamesConf](https://github.com/JamesLiu0802/JamesConf/blob/main/Clash/ClubSim.list) 和 [dongdongtang/myrules](https://github.com/dongdongtang/myrules/blob/master/script/clubsim.list)。2026-10-27 重新核实这三个文件均可访问并包含 5 个已批准 Network 主机，但仅用于交叉佐证和发现候选；其中的 Apple、Google、T-Mobile、共享 IP、进程规则及其他宽泛条目不会被整表导入。
+6. 历史来源 `ClearLuv/iOS_collecton` 和 [cddchen/scripts](https://github.com/cddchen/scripts/blob/main/ClubsimWifiCall.list) 曾包含这 5 个 Network 主机，仅保留为历史证据。cddchen 来源于 2026-10-20 定时运行返回 404；2026-10-27 复核其仓库、Raw 地址及 GitHub API 均无法公开获取，未发现可验证的迁移地址，因此已移出运行时来源。404 本身不能证明永久删除。
 7. DNS、TLS 和证书资料只能作为辅助证据，不能单独证明归属。
 
 [Club Sim 条款](https://clubsim.com.hk/en/tnc)说明服务由 CSL Mobile Limited 提供，[ITU MCC/MNC 公报](https://www.itu.int/dms_pub/itu-t/opb/sp/T-SP-OB.1280-2023-OAS-PDF-E.pdf)将 `454 00` 列为 Hong Kong Telecommunications (HKT) Limited；这些资料支持 ePDG 主机的运营商网络属性。[Thales 资料](https://www.thalesgroup.com/sites/default/files/2025-04/MCS-Enterprise-Automotive-connectivity.pdf)表明 On-Demand Connectivity 是可供多个运营商使用的 eSIM 平台，因此只保留已审核的两个精确主机，不收录其共享根域。目前没有找到 Club Sim 官方页面直接公布这 5 个技术主机，因此文档只称其为多社区来源交叉佐证后的人工批准项，不声称官方直接确认。

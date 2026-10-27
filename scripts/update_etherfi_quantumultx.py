@@ -20,8 +20,10 @@ import resilient_html_sources as resilient
 ROOT = Path(__file__).resolve().parents[1]
 MAXIMUM_SOURCE_BYTES = 8 * 1024 * 1024
 OFFICIAL_EXTERNAL_HOSTS = frozenset({"etherfi.gitbook.io"})
+# Verified 2026-10-27 via https://etherfi.gitbook.io/gov: the public governance
+# site replaces the homepage, which has persistently returned HTTP 429.
 CORE_SOURCE_URLS = (
-    "https://www.ether.fi/",
+    "https://governance.ether.fi/",
     "https://help.ether.fi/en/",
 )
 OPTIONAL_SOURCE_URLS = ("https://etherfi.gitbook.io/etherfi",)

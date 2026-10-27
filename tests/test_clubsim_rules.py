@@ -360,6 +360,35 @@ class DiscoveryTests(unittest.TestCase):
         )
         self.assertGreaterEqual(len(discover.COMMUNITY_RULE_URLS), 2)
 
+    def test_default_discovery_uses_current_sources_without_retired_cddchen(
+        self,
+    ) -> None:
+        current_sources = (
+            "https://raw.githubusercontent.com/huang1179/QuanX/H/Rule/ClubSim.list",
+            "https://raw.githubusercontent.com/JamesLiu0802/JamesConf/main/Clash/ClubSim.list",
+            "https://raw.githubusercontent.com/dongdongtang/myrules/master/script/clubsim.list",
+        )
+        responses = {
+            OFFICIAL_URL: OFFICIAL_HTML,
+            **{url: UPSTREAM_TEXT for url in current_sources},
+        }
+        requested: list[str] = []
+        fixture_fetcher = make_discovery_fetcher(responses)
+
+        def fetch(url: str) -> tuple[str, str, str]:
+            requested.append(url)
+            return fixture_fetcher(url)
+
+        report = discover.discover_candidates(
+            fetcher=fetch,
+            pages=(OFFICIAL_URL,),
+        )
+        self.assertEqual(requested, [OFFICIAL_URL, *current_sources])
+        self.assertEqual(report.community_sources_successful, 3)
+        self.assertEqual(report.community_sources_skipped, 0)
+        self.assertEqual(report.community_warnings, ())
+        self.assertEqual(report.corroborated_network_domains, discover.NETWORK_DOMAINS)
+
     def test_one_community_404_and_one_success_continues(self) -> None:
         report = self._discover(
             {

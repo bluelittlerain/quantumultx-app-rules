@@ -108,7 +108,7 @@ class EtherFiScopeTests(unittest.TestCase):
         self.assertEqual(
             updater.CORE_SOURCE_URLS,
             (
-                "https://www.ether.fi/",
+                "https://governance.ether.fi/",
                 "https://help.ether.fi/en/",
             ),
         )
@@ -124,6 +124,38 @@ class EtherFiScopeTests(unittest.TestCase):
             self.assertFalse(
                 any(url.endswith(redundant) for url in updater.CONFIG.upstream_urls)
             )
+
+    def test_default_update_uses_governance_without_requesting_homepage(self) -> None:
+        requested: list[str] = []
+
+        def urlopen(request, timeout):
+            self.assertEqual(timeout, updater.SOURCE_TIMEOUT_SECONDS)
+            requested.append(request.full_url)
+            if request.full_url == "https://www.ether.fi/":
+                raise updater.urllib.error.HTTPError(
+                    request.full_url, 429, "Too Many Requests", {}, None
+                )
+            return FakeHtmlResponse(official_page(), url=request.full_url)
+
+        with (
+            mock.patch.object(
+                updater.urllib.request, "urlopen", side_effect=urlopen
+            ),
+            mock.patch.object(updater.time, "sleep") as sleep,
+        ):
+            plan, sources = updater.prepare_resilient_update()
+        self.assertNotIn("https://www.ether.fi/", requested)
+        self.assertIn("https://governance.ether.fi/", requested)
+        self.assertEqual(len(requested), 3)
+        self.assertEqual(sources.core_successful, 2)
+        self.assertEqual(sources.skipped, 0)
+        sleep.assert_not_called()
+        self.assertFalse(plan.changed)
+        main = next(item for item in plan.files if item.path.name == "EtherFi.list")
+        self.assertEqual(
+            utils.parse_rule_body(main.new_content, updater.CONFIG.policy),
+            [utils.Rule("HOST-SUFFIX", "ether.fi")],
+        )
 
     def test_source_success_threshold_replaces_redundant_host_observations(
         self,

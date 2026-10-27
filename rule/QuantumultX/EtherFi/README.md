@@ -16,19 +16,22 @@ Quantumult X 常规分流根据请求域名和 IP 地址匹配，不会真正识
 
 ## 数据来源
 
-1. [Ether.fi 官方网站](https://www.ether.fi/)（核心发现来源）
+1. [Ether.fi 官方网站](https://www.ether.fi/)（归属参考；因持续 HTTP 429，已退出定时发现来源）
 2. [Ether.fi Help Center](https://help.ether.fi/en/)（核心发现来源）
 3. [Ether.fi 技术文档](https://etherfi.gitbook.io/etherfi)（可选发现来源，不进入正式规则）
 4. [Ether.fi App Store 页面](https://apps.apple.com/us/app/ether-fi-crypto-card-spend/id6670338367)
 5. [Ether.fi Google Play 页面](https://play.google.com/store/apps/details?id=etherfi.app)
 6. [Ether.fi 官方 GitHub](https://github.com/etherfi-protocol)
 7. 官方网站及 Web App 公开静态代码中的主机引用
+8. [Ether.fi 治理站](https://governance.ether.fi/)（核心发现来源，由[官方治理文档](https://etherfi.gitbook.io/gov)直接链接）
 
 截至当前调研时间，v2fly/domain-list-community、MetaCubeX/meta-rules-dat 和 blackmatrix7/ios_rule_script 均没有可直接使用的 Ether.fi 专用规则文件。因此更新器以公开官方页面的实时可用性和身份标记作为上游安全检查，正式输出仍只来自人工批准文件。
 
 ## 自动更新来源与容错
 
-定时更新只请求官网首页、Help Center 和可选 GitBook 文档入口，不再重复请求同一官网下的 Stake、Liquid、Cash 营销页面。多个官方页面可以共同确认同一个 `HOST-SUFFIX,ether.fi`；来源成功门槛与最终正式规则数量分开计算，不会为凑数量生成父域已覆盖的精确 HOST。
+定时更新请求治理站、Help Center 两个核心来源和可选 GitBook 文档入口。2026-10-27 核实：官网首页连续五周定时请求返回 HTTP 429；官方治理文档直接链接的 `https://governance.ether.fi/` 返回 HTTP 200、无跳转，并通过现有 HTML 身份检查，因此替换首页作为核心来源。此观测用于确认官方域名，不代表交易接口或账户功能的可用性检查。
+
+不再定时请求首页及同站的 Stake、Liquid、Cash 营销页面。多个官方页面可以共同确认同一个 `HOST-SUFFIX,ether.fi`；来源成功门槛与最终正式规则数量分开计算，不会为凑数量生成父域已覆盖的精确 HOST。
 
 单个来源遇到 HTTP 403、408、429、5xx、超时、临时 DNS/TLS 错误或不完整响应时，更新器最多尝试 3 次，然后记录 warning 并跳过。`Retry-After` 最多等待 10 秒，超过上限会直接跳过该来源。继续生成前至少需要 2 个官方来源成功、其中至少 1 个为核心来源，并且去重后至少保留 1 条有效 observation。
 

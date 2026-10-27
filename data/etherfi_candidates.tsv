@@ -9,7 +9,7 @@ etherfi.medium.com	HOST	shared	historical	https://www.ether.fi	External publishi
 etherfi.notion.site	HOST	shared	excluded	https://www.ether.fi	Official media resources use a shared publishing platform	high	Excluded
 etherfi.onelink.me	HOST	shared	excluded	https://www.ether.fi/app/cash/safe	Dedicated app deep-link host uses a shared attribution platform and is not core service traffic	medium	Excluded
 etherscan.io	HOST-SUFFIX	shared	excluded	https://etherfi.gitbook.io/etherfi/contracts-and-integrations/deployed-contracts	Public blockchain explorer is not Ether.fi-exclusive	high	Excluded
-governance.ether.fi	HOST	main	confirmed	https://www.ether.fi	Official governance host is already covered by the ether.fi parent rule	low	Parent-covered; no redundant HOST
+governance.ether.fi	HOST	main	confirmed	https://etherfi.gitbook.io/gov	Verified 2026-10-27: official governance documentation directly links this host; ordinary HTML GET returns HTTP 200 without redirect	low	Core discovery source replacing the persistently rate-limited homepage; parent-covered with no redundant HOST
 help.ether.fi	HOST	main	confirmed	https://help.ether.fi/en	Official Help Center is already covered by the ether.fi parent rule	low	Parent-covered; no redundant HOST
 intercom.io	HOST-SUFFIX	shared	excluded	https://www.ether.fi/app/cash/safe	Shared customer-support service is not Ether.fi-exclusive	high	Excluded
 onelink.me	HOST-SUFFIX	shared	excluded	https://www.ether.fi/app/cash/safe	Shared app attribution and deep-link platform root	high	Excluded

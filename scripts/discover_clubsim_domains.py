@@ -38,6 +38,8 @@ OFFICIAL_PAGES = (
     "https://www.clubsim.com.hk/clsweb/faq",
 )
 OFFICIAL_APK_URL = "https://www.clubsim.com.hk/api/apk/download"
+# cddchen/scripts was publicly unavailable (repository and Raw HTTP 404) on
+# 2026-10-27; no verified replacement was found. Keep it as historical evidence.
 COMMUNITY_RULE_URLS = (
     "https://raw.githubusercontent.com/huang1179/QuanX/"
     "H/Rule/ClubSim.list",
@@ -45,8 +47,6 @@ COMMUNITY_RULE_URLS = (
     "main/Clash/ClubSim.list",
     "https://raw.githubusercontent.com/dongdongtang/myrules/"
     "master/script/clubsim.list",
-    "https://raw.githubusercontent.com/cddchen/scripts/"
-    "main/ClubsimWifiCall.list",
 )
 EXPECTED_PACKAGE = "com.pccw.clubsim"
 
